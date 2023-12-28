@@ -18,6 +18,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
     public DbSet<ContactDetails> ContactDetails { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Module> Modules { get; set; }
+    public DbSet<Connection> Connections { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
