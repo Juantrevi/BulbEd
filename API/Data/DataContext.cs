@@ -12,8 +12,12 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
 {
     public DataContext(DbContextOptions options) : base(options)
     {
-        
+
     }
+
+    public DbSet<ContactDetails> ContactDetails { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<Module> Modules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -24,26 +28,27 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
             .WithOne(u => u.User)
             .HasForeignKey(ur => ur.UserId)
             .IsRequired();
-        
+
         builder.Entity<AppUser>()
             .HasOne(u => u.Photo)
             .WithOne(p => p.AppUser)
             .HasForeignKey<Photo>(p => p.AppUserId);
-        
-        builder.Entity<Photo>()
-            .HasOne(p => p.AppUser)
-            .WithOne(u => u.Photo)
-            .HasForeignKey<AppUser>(u => u.Photo.Id);
-        
+
         builder.Entity<AppUser>()
             .HasOne(u => u.ContactDetails)
             .WithOne(c => c.AppUser)
-            .HasForeignKey<ContactDetails>(c => c.AppUser.Id);
+            .HasForeignKey<ContactDetails>(c => c.AppUserId);
 
         builder.Entity<AppRole>()
             .HasMany(ur => ur.UserRoles)
             .WithOne(u => u.Role)
             .HasForeignKey(ur => ur.RoleId)
+            .IsRequired();
+
+        builder.Entity<Course>()
+            .HasMany(c => c.Modules)
+            .WithOne(m => m.Course)
+            .HasForeignKey(m => m.CourseId)
             .IsRequired();
     }
 }

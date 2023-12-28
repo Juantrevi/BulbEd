@@ -13,6 +13,7 @@ public class Module
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
     public DateTime UpdatedAt { get; set; }
-    
     public Course Course { get; set; }
+    
+    public string CourseId { get; set; }
 }
