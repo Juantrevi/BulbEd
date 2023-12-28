@@ -29,6 +29,8 @@ public class AppUser : IdentityUser<int>
     
     public DateTime UpdatedAt { get; set; }
     
+    public ICollection<AppUserRole> UserRoles { get; set; }
+    
 
     
 
