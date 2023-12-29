@@ -1,4 +1,5 @@
-﻿using BulbEd.Entities;
+﻿using BulbEd.DTOs;
+using BulbEd.Entities;
 
 namespace BulbEd.Interfaces;
 
@@ -6,11 +7,11 @@ public interface IUserRepository
 {
     void Update(AppUser user);
     
-    Task<IEnumerable<AppUser>> GetUsersAsync();
+    Task<IEnumerable<MemberDto>> GetUsersAsync();
     
     Task<AppUser> GetUserByIdAsync(int id);
     
-    Task<AppUser> GetUserByUsernameAsync(string username);
+    Task<MemberDto> GetUserByUsernameAsync(string username);
     
     
 }

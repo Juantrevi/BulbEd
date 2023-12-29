@@ -1,4 +1,5 @@
-﻿using BulbEd.Entities;
+﻿using BulbEd.DTOs;
+using BulbEd.Entities;
 using BulbEd.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +15,13 @@ public class UsersController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
     {
         return Ok(await _unitOfWork.UserRepository.GetUsersAsync());
     }
 
     [HttpGet("{username}")]
-    public async Task<ActionResult<AppUser>> GetUser(string username)
+    public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
         return await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
     }

@@ -34,7 +34,6 @@
     <ItemGroup>
       <Folder Include="Data\Migrations\" />
       <Folder Include="Errors\" />
-      <Folder Include="Helpers\" />
       <Folder Include="Middleware\" />
       <Folder Include="Services\" />
       <Folder Include="SignalR\" />
