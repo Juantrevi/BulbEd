@@ -1,6 +1,6 @@
 ﻿namespace BulbEd.Entities;
 
-public class ContactDetails
+public class ContactDetail
 {
     public string Id { get; set; }
     

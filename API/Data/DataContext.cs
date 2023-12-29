@@ -15,7 +15,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
 
     }
 
-    public DbSet<ContactDetails> ContactDetails { get; set; }
+    public DbSet<ContactDetail> ContactDetails { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Module> Modules { get; set; }
     public DbSet<Connection> Connections { get; set; }
@@ -26,31 +26,17 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
         base.OnModelCreating(builder);
 
         builder.Entity<AppUser>()
-            .HasMany(ur => ur.UserRoles)
-            .WithOne(u => u.User)
-            .HasForeignKey(ur => ur.UserId)
-            .IsRequired();
-
-        builder.Entity<AppUser>()
             .HasOne(u => u.Photo)
             .WithOne(p => p.AppUser)
-            .HasForeignKey<Photo>(p => p.AppUserId);
-
+            .HasForeignKey<Photo>(p => p.AppUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
         builder.Entity<AppUser>()
-            .HasOne(u => u.ContactDetails)
+            .HasOne(u => u.ContactDetail)
             .WithOne(c => c.AppUser)
-            .HasForeignKey<ContactDetails>(c => c.AppUserId);
-
-        builder.Entity<AppRole>()
-            .HasMany(ur => ur.UserRoles)
-            .WithOne(u => u.Role)
-            .HasForeignKey(ur => ur.RoleId)
-            .IsRequired();
-
-        builder.Entity<Course>()
-            .HasMany(c => c.Modules)
-            .WithOne(m => m.Course)
-            .HasForeignKey(m => m.CourseId)
-            .IsRequired();
+            .HasForeignKey<ContactDetail>(c => c.AppUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
     }
 }

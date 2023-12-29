@@ -68,7 +68,7 @@ namespace BulbEd.Data
 
             var contactDetailsData = await System.IO.File.ReadAllTextAsync("Data/ContactDetailsSeedData.json");
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var contactDetails = JsonSerializer.Deserialize<List<ContactDetails>>(contactDetailsData, options);
+            var contactDetails = JsonSerializer.Deserialize<List<ContactDetail>>(contactDetailsData, options);
 
             foreach (var contactDetail in contactDetails)
             {

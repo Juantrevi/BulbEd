@@ -23,12 +23,14 @@ namespace BulbEd.Data
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
             return await _context.Users
+                .Include(p => p.Photo)    
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users
+                .Include(p => p.Photo)    
                 .ToListAsync();
         }
 

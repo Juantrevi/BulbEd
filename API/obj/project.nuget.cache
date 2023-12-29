@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "X4kJUig7R9RIS+YoASVMhwu9b//bmW16lJ3Ct3lG8zRbEq8j19BgsrZiJyzDjmuG5IjE3+V3zJckSavkkwZy9A==",
+  "dgSpecHash": "0/8t2igFXh9d+EqIIpjq11wrfTELiKBRQCR4LMUB7Ul/9d3dyTRZuw3jBJAP5JBZwjtlS/iQizDFj106isbEfg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\juant\\OneDrive\\Escritorio\\BulbEd\\API\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\juant\\OneDrive\\Escritorio\\BulbEd\\API\\api\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\juant\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\juant\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
