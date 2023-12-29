@@ -32,12 +32,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
       <Folder Include="DTOs\" />
       <Folder Include="Errors\" />
-      <Folder Include="Extensions\" />
       <Folder Include="Helpers\" />
-      <Folder Include="Interfaces\" />
       <Folder Include="Middleware\" />
       <Folder Include="Services\" />
       <Folder Include="SignalR\" />

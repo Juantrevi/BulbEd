@@ -62,7 +62,53 @@ namespace BulbEd.Data
             await context.SaveChangesAsync();
         }
 
-        // Repeat the process for other tables
+        public static async Task SeedContactDetails(DataContext context)
+        {
+            if (await context.ContactDetails.AnyAsync()) return;
+
+            var contactDetailsData = await System.IO.File.ReadAllTextAsync("Data/ContactDetailsSeedData.json");
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var contactDetails = JsonSerializer.Deserialize<List<ContactDetails>>(contactDetailsData, options);
+
+            foreach (var contactDetail in contactDetails)
+            {
+                context.ContactDetails.Add(contactDetail);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedModules(DataContext context)
+        {
+            if (await context.Modules.AnyAsync()) return;
+
+            var moduleData = await System.IO.File.ReadAllTextAsync("Data/ModuleSeedData.json");
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var modules = JsonSerializer.Deserialize<List<Module>>(moduleData, options);
+
+            foreach (var module in modules)
+            {
+                context.Modules.Add(module);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedPhotos(DataContext context)
+        {
+            if (await context.Photos.AnyAsync()) return;
+
+            var photoData = await System.IO.File.ReadAllTextAsync("Data/PhotoSeedData.json");
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var photos = JsonSerializer.Deserialize<List<Photo>>(photoData, options);
+
+            foreach (var photo in photos)
+            {
+                context.Photos.Add(photo);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }
             
