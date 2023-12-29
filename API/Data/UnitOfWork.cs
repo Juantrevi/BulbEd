@@ -12,15 +12,15 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
     
-    public IUserRepository UserRepository { get; }
+    public IUserRepository UserRepository => new UserRepository(_context);
     
-    public Task<bool> Complete()
+    public async Task<bool> Complete()
     {
-        throw new NotImplementedException();
+        return await _context.SaveChangesAsync() > 0; 
     }
 
     public bool HasChanges()
     {
-        throw new NotImplementedException();
+        return _context.ChangeTracker.HasChanges();
     }
 }
