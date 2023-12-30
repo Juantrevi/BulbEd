@@ -37,6 +37,8 @@ namespace BulbEd.Data
         {
             var users = await _context.Users
                 .Include(p => p.Photo)
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<MemberDto>>(users);

@@ -19,9 +19,14 @@ public class MemberDto
     
     public DateOnly DateOfBirth { get; set; }
     
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
     
-    public DateTime LastActive { get; set; } = DateTime.UtcNow;
+    public DateTime LastActive { get; set; } 
     
     public DateTime UpdatedAt { get; set; }
+    
+    public string PhoneNumber { get; set; }
+    public string Status { get; set; }
+    
+    public List<string> Roles { get; set; }
 }
