@@ -19,13 +19,19 @@ namespace BulbEd.Data
             _mapper = mapper;
         }
         
+        private IQueryable<AppUser> GetUsersWithIncludes()
+        {
+            return _context.Users
+                .Include(p => p.Photo)
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .Include(ct => ct.ContactDetail);
+        }
 
         public async Task<MemberDto> GetUserByIdAsync(int id)
         {
-            var user = await _context.Users.
-                Include(p => p.Photo)
-                .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
+            var user = await 
+                GetUsersWithIncludes()
                 .SingleOrDefaultAsync(x => x.Id == id);
             
             return _mapper.Map<MemberDto>(user);
@@ -33,10 +39,8 @@ namespace BulbEd.Data
 
         public async Task<MemberDto> GetUserByUsernameAsync(string username)
         {
-            var user = await _context.Users
-                .Include(p => p.Photo)
-                .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
+            var user = await 
+                GetUsersWithIncludes()
                 .SingleOrDefaultAsync(x => x.UserName == username);
 
             return _mapper.Map<MemberDto>(user);
@@ -44,10 +48,8 @@ namespace BulbEd.Data
 
         public async Task<IEnumerable<MemberDto>> GetUsersAsync()
         {
-            var users = await _context.Users
-                .Include(p => p.Photo)
-                .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
+            var users = await 
+                GetUsersWithIncludes()
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<MemberDto>>(users);
