@@ -18,16 +18,25 @@ namespace BulbEd.Data
             _context = context;
             _mapper = mapper;
         }
+        
 
-        public async Task<AppUser> GetUserByIdAsync(int id)
+        public async Task<MemberDto> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            var user = await _context.Users.
+                Include(p => p.Photo)
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                .SingleOrDefaultAsync(x => x.Id == id);
+            
+            return _mapper.Map<MemberDto>(user);
         }
 
         public async Task<MemberDto> GetUserByUsernameAsync(string username)
         {
             var user = await _context.Users
                 .Include(p => p.Photo)
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
                 .SingleOrDefaultAsync(x => x.UserName == username);
 
             return _mapper.Map<MemberDto>(user);

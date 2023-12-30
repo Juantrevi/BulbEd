@@ -5,25 +5,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulbEd.Controllers;
 
-public class UsersController : BaseApiController
+public class UserController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public UsersController(IUnitOfWork unitOfWork)
+    public UserController(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+    [HttpGet("users")]
+    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
     {
         return Ok(await _unitOfWork.UserRepository.GetUsersAsync());
     }
 
-    [HttpGet("{username}")]
+    [HttpGet("user/{username:alpha}")]
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
         return await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+    }
+    
+    [HttpGet("user/{id:int}")]
+    public async Task<ActionResult<MemberDto>> GetUser(int id)
+    {
+        return await _unitOfWork.UserRepository.GetUserByIdAsync(id);
     }
     
 }

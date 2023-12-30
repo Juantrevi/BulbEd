@@ -3,7 +3,7 @@
 namespace BulbEd.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/")]
 public class BaseApiController : ControllerBase
 {
     
