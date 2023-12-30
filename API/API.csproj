@@ -35,7 +35,6 @@
       <Folder Include="Data\Migrations\" />
       <Folder Include="Errors\" />
       <Folder Include="Middleware\" />
-      <Folder Include="Services\" />
       <Folder Include="SignalR\" />
     </ItemGroup>
 
