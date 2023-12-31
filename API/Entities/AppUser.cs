@@ -13,8 +13,7 @@ public class AppUser : IdentityUser<int>
 
     public Photo? Photo { get; set; } = new();
 
-    public ICollection<AppUserRole>? UserRoles { get; set; } = new List<AppUserRole>();
-    
+    public ICollection<IdentityUserRole<int>> UserRoles { get; set; }     
     public ContactDetail? ContactDetail { get; set; }
     
     public AppUserStatus? Status { get; set; }

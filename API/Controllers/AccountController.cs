@@ -12,36 +12,43 @@ public class AccountController : BaseApiController
 {
     
     private readonly UserManager<AppUser> _userManager;
+    private readonly RoleManager<AppRole> _roleManager;
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
 
-
-    public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper)
+    public AccountController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ITokenService tokenService, IMapper mapper)
     {
         _userManager = userManager;
+        _roleManager = roleManager;
         _tokenService = tokenService;
         _mapper = mapper;
-        
     }
     
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
-    {   
-        if(await UserExists(registerDto.Email)) return BadRequest("Email is taken");
-            
+    {
+        if(await UserExists(registerDto.Email)) return BadRequest("Username is taken");
+
         var user = _mapper.Map<AppUser>(registerDto);
-            
 
         user.UserName = registerDto.Email.ToLower();
-
 
         var result = await _userManager.CreateAsync(user, registerDto.Password);
 
         if(!result.Succeeded) return BadRequest(result.Errors);
+        
+        // Check if the "Student" role exists
+        if(!await _roleManager.RoleExistsAsync("Student"))
+        {
+            // If not, create the "Student" role
+            var role = new AppRole { Name = "Student" };
+            await _roleManager.CreateAsync(role);
+        }
 
-        //var roleResult = await _userManager.AddToRoleAsync(user, "student");
+        // Add the user to the "student" role
+        var roleResult = await _userManager.AddToRoleAsync(user, "Student");
 
-        //if(!roleResult.Succeeded) return BadRequest(result.Errors);
+        if(!roleResult.Succeeded) return BadRequest(result.Errors);
 
         return new UserDto
         {

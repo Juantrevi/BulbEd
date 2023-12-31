@@ -24,8 +24,8 @@ namespace BulbEd.Data
             return _context.Users
                 .Include(p => p.Photo)
                 .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .Include(ct => ct.ContactDetail);
+                .Include(ur => ur.UserRoles)
+                .ThenInclude(ur => _context.Roles.Find(ur.RoleId));
         }
 
         public async Task<MemberDto> GetUserByIdAsync(int id)

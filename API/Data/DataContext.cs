@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BulbEd.Data;
 
 public class DataContext : IdentityDbContext<AppUser, AppRole, int
-                                            ,IdentityUserClaim<int>, AppUserRole
+                                            ,IdentityUserClaim<int>, IdentityUserRole<int>
                                             , IdentityUserLogin<int>, IdentityRoleClaim<int>
                                             ,IdentityUserToken<int>>
 {
@@ -42,20 +42,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
         * AppUserRole Relations
         * This is where we define the relationships between our entities
         */
-        builder.Entity<AppUserRole>()
-            .HasKey(ur => new { ur.UserId, ur.RoleId });
-
-        builder.Entity<AppUserRole>()
-            .HasOne(ur => ur.User)
-            .WithMany(u => u.UserRoles)
-            .HasForeignKey(ur => ur.UserId);
-
-        builder.Entity<AppUserRole>()
-            .HasOne(ur => ur.Role)
-            .WithMany(r => r.UserRoles)
-            .HasForeignKey(ur => ur.RoleId);
-        
-        
+        builder.Entity<IdentityUserRole<int>>().HasKey(p => new { p.UserId, p.RoleId });
         
         
     }

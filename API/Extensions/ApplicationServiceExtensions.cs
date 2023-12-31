@@ -26,9 +26,11 @@ public static class ApplicationServiceExtensions
         services.AddSwaggerGen();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITokenService, TokenService>();
-            services.AddIdentity<AppUser, AppRole>()
+        services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
+
+
 
         
         return services;
