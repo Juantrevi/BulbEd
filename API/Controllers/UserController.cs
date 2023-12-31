@@ -1,6 +1,7 @@
 ﻿using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulbEd.Controllers;
@@ -14,6 +15,7 @@ public class UserController : BaseApiController
         _unitOfWork = unitOfWork;
     }
 
+    [Authorize(Policy = "RequireStudentRole")]
     [HttpGet("users")]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
     {
@@ -26,6 +28,8 @@ public class UserController : BaseApiController
         return await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
     }
     
+    //[Authorize(Policy = "RequireStudentRole")]
+    [Authorize(Policy = "RequireAdminRole")]
     [HttpGet("user/{id:int}")]
     public async Task<ActionResult<MemberDto>> GetUser(int id)
     {
