@@ -29,6 +29,7 @@ public static class ApplicationServiceExtensions
         services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
+        services.AddScoped<IAccountService, AccountService>();
 
 
 
