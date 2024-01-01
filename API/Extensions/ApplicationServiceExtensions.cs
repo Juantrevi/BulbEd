@@ -27,7 +27,12 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<LogUserActivity>();
+        services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
+
+        
+        
         
 
         return services;

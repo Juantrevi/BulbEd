@@ -8,14 +8,21 @@ public class UnitOfWork : IUnitOfWork
     
     private readonly DataContext _context;
     private readonly IMapper _mapper;
+    private readonly IContactDetailRepository _contactDetailRepository;
 
-    public UnitOfWork(DataContext context, IMapper mapper)
+    public UnitOfWork(DataContext context, IMapper mapper, IContactDetailRepository contactDetailRepository)
     {
         _context = context;
         _mapper = mapper;
+        _contactDetailRepository = contactDetailRepository;
+        
     }
     
     public IUserRepository UserRepository => new UserRepository(_context, _mapper);
+    public IContactDetailRepository ContactDetailRepository => new ContactDetailRepository(_context, _mapper);
+    
+    
+    
     
     public async Task<bool> Complete()
     {

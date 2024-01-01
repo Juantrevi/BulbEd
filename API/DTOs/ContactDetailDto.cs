@@ -1,8 +1,7 @@
-﻿namespace BulbEd.Entities;
+﻿namespace BulbEd.DTOs;
 
-public class ContactDetail
+public class ContactDetailDto
 {
-    public int Id { get; set; }
     
     public string Country { get; set; }
     
@@ -22,13 +21,5 @@ public class ContactDetail
     
     public string EmergencyContactRelationship { get; set; }
     
-    public string UpdatedAt { get; set; }
-    
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    
-    public AppUser AppUser { get; set; }
-    
-    public int AppUserId { get; set; }
-    
-    
+    //public string Id { get; set; }
 }

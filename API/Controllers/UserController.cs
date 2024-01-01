@@ -1,6 +1,8 @@
-﻿using BulbEd.DTOs;
+﻿using System.Security.Claims;
+using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
+using BulbEd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +11,15 @@ namespace BulbEd.Controllers;
 public class UserController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserService _userService;
 
-    public UserController(IUnitOfWork unitOfWork)
+    public UserController(IUnitOfWork unitOfWork, IUserService userService)
     {
         _unitOfWork = unitOfWork;
+        _userService = userService;
     }
 
+    
     [Authorize(Policy = "RequireStudentRole")]
     [HttpGet("users")]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
@@ -22,11 +27,13 @@ public class UserController : BaseApiController
         return Ok(await _unitOfWork.UserRepository.GetUsersAsync());
     }
 
+    
     [HttpGet("user/{username:alpha}")]
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
         return await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
     }
+    
     
     //[Authorize(Policy = "RequireStudentRole")]
     [Authorize(Policy = "RequireAdminRole")]
@@ -35,5 +42,36 @@ public class UserController : BaseApiController
     {
         return await _unitOfWork.UserRepository.GetUserByIdAsync(id);
     }
+    
+    
+    [Authorize]
+    [HttpPost("contactdetails")]
+    public async Task<IActionResult> CreateContactDetails(ContactDetailDto contactDetailDto)
+    {
+    try
+    {
+        var createdContactDetails = await _userService.CreateContactDetail(contactDetailDto, User);
+        return Ok(createdContactDetails);
+    }
+    catch (Exception ex)
+    {
+        return BadRequest(ex.Message);
+    }
+}
+
+[Authorize]
+[HttpPut("contactdetails")]
+public async Task<IActionResult> UpdateContactDetails(ContactDetailDto contactDetailDto)
+{
+    try
+    {
+        var updatedContactDetails = await _userService.UpdateContactDetail(contactDetailDto, User);
+        return Ok(updatedContactDetails);
+    }
+    catch (Exception ex)
+    {
+        return BadRequest(ex.Message);
+    }
+}
     
 }

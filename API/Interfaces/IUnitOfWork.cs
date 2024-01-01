@@ -3,6 +3,7 @@
 public interface IUnitOfWork
 {
     IUserRepository UserRepository { get; }
+    IContactDetailRepository ContactDetailRepository { get; }
     
     Task<bool> Complete();
     

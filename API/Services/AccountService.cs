@@ -49,6 +49,7 @@ public class AccountService : IAccountService
         // Add the user to the "student" role
         var roleResult = await _userManager.AddToRoleAsync(user, "Student");
 
+        
 if(!roleResult.Succeeded) throw new InvalidOperationException("Error occurred while adding role");
         return new UserDto
         {

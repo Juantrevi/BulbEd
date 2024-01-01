@@ -21,7 +21,9 @@ public class AutoMapperProfiles : Profile
                 opt.MapFrom(src => src.ContactDetail.City))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.ContactDetail.PhoneNumber));
         
-        
         CreateMap<RegisterDto, AppUser>();
+        CreateMap<ContactDetail, ContactDetailDto>();
+        CreateMap<ContactDetailDto, ContactDetail>();
+
     }
 }
