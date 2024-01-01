@@ -12,12 +12,14 @@ public static class ClaimsPrincipalExtensions
 
 public static int GetUserId(this ClaimsPrincipal user)
 {
-    Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+    Console.WriteLine("---------------------------------------------GETUSERID CLAIMS--------------------------------------------------------");
     var claim = user.FindFirst(ClaimTypes.NameIdentifier);
+    Console.WriteLine("CLAIM" + claim);
     if (claim != null)
     {
         if (int.TryParse(claim.Value, out int userId))
         {
+            Console.WriteLine("USERID" + userId);
             return userId;
         }
     }

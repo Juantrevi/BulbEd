@@ -18,6 +18,11 @@ namespace BulbEd.Data
             _context = context;
             _mapper = mapper;
         }
+
+        public async Task<AppUser> GetAppUserByIdAsync(int id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
         
         private IQueryable<AppUser> GetUsersWithIncludes()
         {

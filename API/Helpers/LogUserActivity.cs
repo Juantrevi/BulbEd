@@ -9,16 +9,16 @@ public class LogUserActivity : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        Console.WriteLine("-----------------------------------------------------------------------------------------------------");
         var resultContext = await next();
 
+        Console.WriteLine("resultContext = " + resultContext.HttpContext.User.Identity.IsAuthenticated);
         if (resultContext.HttpContext.User.Identity is { IsAuthenticated: false }) return;
         
         var userId = resultContext.HttpContext.User.GetUserId();
         
         var uow = resultContext.HttpContext.RequestServices.GetService<IUnitOfWork>();
         
-        var user = await uow.UserRepository.GetUserByIdAsync(userId);
+        var user = await uow.UserRepository.GetAppUserByIdAsync(userId);
         
         user.LastActive = DateTime.UtcNow;
         
