@@ -6,14 +6,22 @@ public static class ClaimsPrincipalExtensions
 {
     public static string GetUsername(this ClaimsPrincipal user)
     {
-        //return user.FindFirst(ClaimTypes.Name)?.Value;
         return user.FindFirst(ClaimTypes.Name)?.Value;
     }
 
 
-    public static int GetUserId(this ClaimsPrincipal user)
+public static int GetUserId(this ClaimsPrincipal user)
+{
+    Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+    var claim = user.FindFirst(ClaimTypes.NameIdentifier);
+    if (claim != null)
     {
-        return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        if (int.TryParse(claim.Value, out int userId))
+        {
+            return userId;
+        }
     }
+    return 0; // return a default value if the claim is not found or the value is not a valid integer
+}
 
 }

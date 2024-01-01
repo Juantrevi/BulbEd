@@ -1,5 +1,6 @@
 ﻿using BulbEd.Data;
 using BulbEd.Entities;
+using BulbEd.Helpers;
 using BulbEd.Interfaces;
 using BulbEd.Services;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAccountService, AccountService>();
-        //services.AddIdentity<AppUser, AppRole>()
-            //.AddEntityFrameworkStores<DataContext>();
+        services.AddScoped<LogUserActivity>();
         
 
         return services;
