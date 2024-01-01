@@ -64,7 +64,7 @@ public async Task<UserDto> LoginAsync(LoginDto loginDto)
         .Include(p => p.Photo)
         .SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
 
-    if(user == null) throw new ArgumentException("Invalid username");
+    if(user == null) throw new ArgumentException("Invalid email");
 
     var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 

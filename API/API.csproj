@@ -33,8 +33,6 @@
 
     <ItemGroup>
       <Folder Include="Data\Migrations\" />
-      <Folder Include="Errors\" />
-      <Folder Include="Middleware\" />
       <Folder Include="SignalR\" />
     </ItemGroup>
 
