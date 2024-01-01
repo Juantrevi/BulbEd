@@ -22,7 +22,7 @@ public class ContactDetail
     
     public string EmergencyContactRelationship { get; set; }
     
-    public string UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     

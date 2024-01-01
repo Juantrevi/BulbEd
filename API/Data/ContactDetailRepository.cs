@@ -23,18 +23,22 @@ public class ContactDetailRepository : IContactDetailRepository
             .FirstOrDefaultAsync(cd => cd.AppUserId == userId);
     }
 
-    public async Task<ContactDetail> CreateContactDetail(ContactDetailDto contactDetailDto, int userId)
+    public async void CreateContactDetail(int userId)
     {
-        var newContactDetail = _mapper.Map<ContactDetail>(contactDetailDto);
-        newContactDetail.AppUserId = userId;
-        await _context.ContactDetails.AddAsync(newContactDetail);
+        _context.ContactDetails.Add(new ContactDetail
+        {
+            AppUserId = userId
+        });
+        
         await _context.SaveChangesAsync();
-        return newContactDetail;
+        
     }
 
     public async Task<ContactDetail> UpdateContactDetail(ContactDetailDto contactDetailDto, int userId)
     {
         var contactDetail = await GetContactDetailByUserId(userId);
+        contactDetail.UpdatedAt = DateTime.UtcNow;
+        
         if (contactDetail == null)
         {
             throw new Exception("ContactDetail not found");
@@ -44,10 +48,6 @@ public class ContactDetailRepository : IContactDetailRepository
         await _context.SaveChangesAsync();
         return contactDetail;
     }
-
-    public void AddContactDetail(ContactDetail contactDetail)
-    {
-        _context.ContactDetails.Add(contactDetail);
-    }
+    
 }
 }

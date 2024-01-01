@@ -21,34 +21,7 @@ public class UserService : IUserService
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
-
-public async Task<ContactDetailDto> CreateContactDetail(ContactDetailDto contactDetailDto, ClaimsPrincipal currentUser)
-{
-    var userIdFromToken = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
-    int id = int.Parse(userIdFromToken);
-
-    var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-    if (user == null)
-    {
-        throw new Exception("User not found");
-    }
-
-    var newContactDetail = _mapper.Map<ContactDetail>(contactDetailDto);
-    newContactDetail.AppUser = user;
-    newContactDetail.AppUserId = user.Id;
     
-
-    _unitOfWork.ContactDetailRepository.AddContactDetail(newContactDetail);
-    await _unitOfWork.Complete();
-
-    user.ContactDetail = newContactDetail;
-
-    _unitOfWork.UserRepository.Update(user);
-    await _unitOfWork.Complete();
-
-    return _mapper.Map<ContactDetailDto>(newContactDetail);
-}
 
     public async Task<ContactDetailDto> UpdateContactDetail(ContactDetailDto contactDetailDto, ClaimsPrincipal currentUser)
     {

@@ -13,13 +13,15 @@ public class AccountService : IAccountService
     private readonly RoleManager<AppRole> _roleManager;
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ITokenService tokenService, IMapper mapper)
+    public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ITokenService tokenService, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _tokenService = tokenService;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<UserDto> RegisterAsync(RegisterDto registerDto)
@@ -48,9 +50,11 @@ public class AccountService : IAccountService
 
         // Add the user to the "student" role
         var roleResult = await _userManager.AddToRoleAsync(user, "Student");
-
         
-if(!roleResult.Succeeded) throw new InvalidOperationException("Error occurred while adding role");
+        _unitOfWork.ContactDetailRepository.CreateContactDetail(user.Id);
+        
+        
+        if(!roleResult.Succeeded) throw new InvalidOperationException("Error occurred while adding role");
         return new UserDto
         {
             Email = user.UserName,

@@ -3,6 +3,7 @@ using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
 using BulbEd.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,35 +44,30 @@ public class UserController : BaseApiController
         return await _unitOfWork.UserRepository.GetUserByIdAsync(id);
     }
     
+
+    [Authorize]
+    [HttpPut("contactdetails")]
+    public async Task<IActionResult> UpdateContactDetails(ContactDetailDto contactDetailDto)
+    {
+        try
+        {
+            var updatedContactDetails = await _userService.UpdateContactDetail(contactDetailDto, User);
+            return Ok(updatedContactDetails);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
     
     [Authorize]
-    [HttpPost("contactdetails")]
-    public async Task<IActionResult> CreateContactDetails(ContactDetailDto contactDetailDto)
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
     {
-    try
-    {
-        var createdContactDetails = await _userService.CreateContactDetail(contactDetailDto, User);
-        return Ok(createdContactDetails);
-    }
-    catch (Exception ex)
-    {
-        return BadRequest(ex.Message);
-    }
-}
+        // Sign out the user
+        await HttpContext.SignOutAsync();
 
-[Authorize]
-[HttpPut("contactdetails")]
-public async Task<IActionResult> UpdateContactDetails(ContactDetailDto contactDetailDto)
-{
-    try
-    {
-        var updatedContactDetails = await _userService.UpdateContactDetail(contactDetailDto, User);
-        return Ok(updatedContactDetails);
+        // Return a success message
+        return Ok("User logged out successfully");
     }
-    catch (Exception ex)
-    {
-        return BadRequest(ex.Message);
-    }
-}
-    
 }
