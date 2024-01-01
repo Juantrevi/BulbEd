@@ -17,6 +17,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
 
     public DbSet<ContactDetail> ContactDetails { get; set; }
     public DbSet<Photo> Photos { get; set; }
+    public DbSet<TokenBlackList> TokenBlackLists { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

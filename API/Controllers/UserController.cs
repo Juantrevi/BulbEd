@@ -13,11 +13,13 @@ public class UserController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserService _userService;
+    private readonly ITokenBlacklistService _tokenBlacklistService;
 
-    public UserController(IUnitOfWork unitOfWork, IUserService userService)
+    public UserController(IUnitOfWork unitOfWork, IUserService userService, ITokenBlacklistService tokenBlacklistService)
     {
         _unitOfWork = unitOfWork;
         _userService = userService;
+        _tokenBlacklistService = tokenBlacklistService;
     }
 
     
@@ -64,10 +66,9 @@ public class UserController : BaseApiController
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        // Sign out the user
-        await HttpContext.SignOutAsync();
+        var token = HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1];
+        await _tokenBlacklistService.AddToken(token, DateTime.UtcNow.AddHours(1)); // Token will be blacklisted for 1 hour
 
-        // Return a success message
         return Ok("User logged out successfully");
     }
 }

@@ -26,6 +26,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+app.UseMiddleware<TokenBlacklistMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
