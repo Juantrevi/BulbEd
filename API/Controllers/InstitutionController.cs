@@ -1,5 +1,6 @@
 ﻿using BulbEd.DTOs;
 using BulbEd.Interfaces;
+using BulbEd.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,11 @@ public class InstitutionController : BaseApiController
 {
     
     private readonly IUnitOfWork _unitOfWork;
-
-    public InstitutionController(IUnitOfWork unitOfWork)
+    private readonly IInstituteService _instituteService;
+    public InstitutionController(IUnitOfWork unitOfWork, IInstituteService instituteService)
     {
         _unitOfWork = unitOfWork;
+        _instituteService = instituteService;
     }
     
     [HttpGet]
@@ -33,9 +35,8 @@ public class InstitutionController : BaseApiController
     [HttpPost ("createinstitution")]
     public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
     {
-        await _unitOfWork.InstitutionRepository.Create(institutionDto);
-        if (await _unitOfWork.Complete()) return Ok();
-        return BadRequest("Problem creating institution");
+        await _instituteService.CreateInstitute(institutionDto);
+        return Ok();
     }
     
     [HttpPut("{id}")]
