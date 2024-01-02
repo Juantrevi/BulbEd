@@ -7,4 +7,5 @@ namespace BulbEd.Controllers;
 public class BaseApiController : ControllerBase
 {
     
+    
 }

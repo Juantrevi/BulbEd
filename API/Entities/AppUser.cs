@@ -1,13 +1,14 @@
-﻿using BulbEd.Entities.Enums;
+﻿#nullable enable
+using BulbEd.Entities.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace BulbEd.Entities;
 
 public class AppUser : IdentityUser<int>
 {
-    public string? FirstName { get; set; }
+    public string FirstName { get; set; }
     
-    public string? LastName { get; set; }
+    public string LastName { get; set; }
     
     public string? Gender { get; set; }
 
@@ -17,6 +18,7 @@ public class AppUser : IdentityUser<int>
     public ContactDetail? ContactDetail { get; set; }
     
     public AppUserStatus? Status { get; set; }
+    public Institution? Institution { get; set; }
     
     public DateOnly? DateOfBirth { get; set; }
     
@@ -32,4 +34,5 @@ public class AppUser : IdentityUser<int>
     public new bool? TwoFactorEnabled { get; set; }
     public new bool? LockoutEnabled { get; set; }
     public new int? AccessFailedCount { get; set; }
+    public int? InstitutionId { get; set; }
 }

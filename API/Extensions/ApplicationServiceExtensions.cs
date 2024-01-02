@@ -31,6 +31,8 @@ public static class ApplicationServiceExtensions
         services.AddScoped<LogUserActivity>();
         services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
         services.AddScoped<ITokenBlacklistService, TokenBlacklistService>();
+        services.AddScoped<IInstitutionRepository, InstitutionRepository>();
+        
 
         
         

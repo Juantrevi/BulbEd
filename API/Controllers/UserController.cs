@@ -51,15 +51,8 @@ public class UserController : BaseApiController
     [HttpPut("contactdetails")]
     public async Task<IActionResult> UpdateContactDetails(ContactDetailDto contactDetailDto)
     {
-        try
-        {
-            var updatedContactDetails = await _userService.UpdateContactDetail(contactDetailDto, User);
-            return Ok(updatedContactDetails);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var updatedContactDetails = await _userService.UpdateContactDetail(contactDetailDto, User);
+        return Ok(updatedContactDetails);
     }
     
     [Authorize]

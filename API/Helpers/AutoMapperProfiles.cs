@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BulbEd.Data.Migrations;
 using BulbEd.DTOs;
 using BulbEd.Entities;
 
@@ -24,6 +23,8 @@ public class AutoMapperProfiles : Profile
         CreateMap<RegisterDto, AppUser>();
         CreateMap<ContactDetail, ContactDetailDto>();
         CreateMap<ContactDetailDto, ContactDetail>();
+        CreateMap<Institution, InstitutionDto>();
+        CreateMap<InstitutionDto, Institution>();
 
     }
 }
