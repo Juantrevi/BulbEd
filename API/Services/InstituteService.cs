@@ -15,11 +15,18 @@ public class InstituteService : IInstituteService
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    public async Task CreateInstitute(InstitutionDto institutionDto)
+public async Task CreateInstitute(InstitutionDto institutionDto, int userId)
+{
+    var institution = _mapper.Map<Institution>(institutionDto);
+    await _unitOfWork.InstitutionRepository.Create(institution);
+    await _unitOfWork.Complete();
+
+    var user = await _unitOfWork.UserRepository.GetAppUserByIdAsync(userId);
+    if (user != null)
     {
-        var institution = _mapper.Map<Institution>(institutionDto);
-        await _unitOfWork.InstitutionRepository.Create(institutionDto);
+        user.InstitutionId = institution.Id;
+        _unitOfWork.UserRepository.Update(user);
         await _unitOfWork.Complete();
-        
     }
+}
 }

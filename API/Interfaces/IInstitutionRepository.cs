@@ -8,7 +8,7 @@ public interface IInstitutionRepository
     Task<Institution> GetInstitutionById(int id);
     Task<IEnumerable<Institution>> GetInstitutions();
     
-    Task Create(InstitutionDto institutionDto);
+    Task Create(Institution institution);
     
     void Update(int id, InstitutionDto institutionDto);
     

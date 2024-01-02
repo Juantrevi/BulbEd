@@ -5,5 +5,5 @@ namespace BulbEd.Interfaces;
 
 public interface IInstituteService
 {
-    Task CreateInstitute(InstitutionDto institutionDto);
+    Task CreateInstitute(InstitutionDto institutionDto, int userId);
 }

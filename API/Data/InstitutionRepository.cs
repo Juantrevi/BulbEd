@@ -30,9 +30,8 @@ public class InstitutionRepository : IInstitutionRepository
         return await _context.Institutions.ToListAsync();
     }
 
-    public async Task Create(InstitutionDto institutionDto)
+    public async Task Create(Institution institution)
     {
-        var institution = _mapper.Map<Institution>(institutionDto);
         institution.Created = DateTime.UtcNow;
         _context.Institutions.Add(institution);
         await _context.SaveChangesAsync();

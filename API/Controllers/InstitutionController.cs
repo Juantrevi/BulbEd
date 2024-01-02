@@ -1,4 +1,5 @@
-﻿using BulbEd.DTOs;
+﻿using System.Security.Claims;
+using BulbEd.DTOs;
 using BulbEd.Interfaces;
 using BulbEd.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -35,7 +36,9 @@ public class InstitutionController : BaseApiController
     [HttpPost ("createinstitution")]
     public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
     {
-        await _instituteService.CreateInstitute(institutionDto);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        int id = int.Parse(userId);
+        await _instituteService.CreateInstitute(institutionDto, id);
         return Ok();
     }
     
