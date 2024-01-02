@@ -10,7 +10,7 @@ public interface IInstitutionRepository
     
     Task Create(Institution institution);
     
-    void Update(int id, InstitutionDto institutionDto);
+    Task Update(int id, InstitutionDto institutionDto);
     
-    void Delete(int id);
+    Task Delete(int id);
 }

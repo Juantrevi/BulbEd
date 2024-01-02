@@ -6,7 +6,7 @@ public class Institution
     
     public string Name { get; set; }
     
-    public ContactDetail ContactDetail { get; set; }
+    public ContactDetail? ContactDetail { get; set; }
     
     public ICollection<AppUser>? Users { get; set; }
     

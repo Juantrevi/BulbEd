@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BulbEd.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BulbEd.Controllers;
 
@@ -6,6 +7,16 @@ namespace BulbEd.Controllers;
 [Route("api/")]
 public class BaseApiController : ControllerBase
 {
+    protected readonly IUnitOfWork _unitOfWork;
+
+    public BaseApiController()
+    {
+        
+    }
+    public BaseApiController(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
     
     
 }

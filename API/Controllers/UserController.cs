@@ -11,13 +11,11 @@ namespace BulbEd.Controllers;
 
 public class UserController : BaseApiController
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserService _userService;
     private readonly ITokenBlacklistService _tokenBlacklistService;
 
-    public UserController(IUnitOfWork unitOfWork, IUserService userService, ITokenBlacklistService tokenBlacklistService)
+    public UserController(IUserService userService, ITokenBlacklistService tokenBlacklistService)
     {
-        _unitOfWork = unitOfWork;
         _userService = userService;
         _tokenBlacklistService = tokenBlacklistService;
     }

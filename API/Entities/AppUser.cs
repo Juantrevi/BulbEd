@@ -34,5 +34,5 @@ public class AppUser : IdentityUser<int>
     public new bool? TwoFactorEnabled { get; set; }
     public new bool? LockoutEnabled { get; set; }
     public new int? AccessFailedCount { get; set; }
-    public int? InstitutionId { get; set; }
+
 }

@@ -52,20 +52,14 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
          * Institution Relations
          * This is where we define the relationships between our entities
          */
-        builder.Entity<Institution>()
-            .HasMany(i => i.Users)
-            .WithOne(u => u.Institution)
-            .HasForeignKey(u => u.InstitutionId);
 
         builder.Entity<Institution>()
-            .HasMany(i => i.Courses)
+            .HasOne(i => i.ContactDetail)
             .WithOne(c => c.Institution)
-            .HasForeignKey(c => c.InstitutionId);
+            .HasForeignKey<ContactDetail>(c => c.InstitutionId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Entity<Course>()
-            .HasMany(c => c.Modules)
-            .WithOne(m => m.Course)
-            .HasForeignKey(m => m.CourseId);
+        
     }
 }     
         

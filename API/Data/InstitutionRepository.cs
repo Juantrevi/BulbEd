@@ -37,14 +37,14 @@ public class InstitutionRepository : IInstitutionRepository
         await _context.SaveChangesAsync();
     }
     
-    public async void Update(int id, InstitutionDto institutionDto)
+    public async Task Update(int id, InstitutionDto institutionDto)
     {
         var institution = _mapper.Map<Institution>(institutionDto);
         _context.Entry(institution).State = EntityState.Modified;
         await _context.SaveChangesAsync();
     }
 
-    public async void Delete(int id)
+    public async Task Delete(int id)
     {
         var institution = _context.Institutions.Find(id);
         _context.Institutions.Remove(institution);

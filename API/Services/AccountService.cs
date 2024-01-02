@@ -51,7 +51,7 @@ public class AccountService : IAccountService
         // Add the user to the "student" role
         var roleResult = await _userManager.AddToRoleAsync(user, "Student");
         
-        _unitOfWork.ContactDetailRepository.CreateContactDetail(user.Id);
+        await _unitOfWork.ContactDetailRepository.CreateContactDetail(user.Id);
         
         
         if(!roleResult.Succeeded) throw new InvalidOperationException("Error occurred while adding role");

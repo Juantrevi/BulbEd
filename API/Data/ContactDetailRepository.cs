@@ -23,7 +23,7 @@ public class ContactDetailRepository : IContactDetailRepository
             .FirstOrDefaultAsync(cd => cd.AppUserId == userId);
     }
 
-    public async void CreateContactDetail(int userId)
+    public async Task<ContactDetail> CreateContactDetail(int userId)
     {
         _context.ContactDetails.Add(new ContactDetail
         {
@@ -31,7 +31,9 @@ public class ContactDetailRepository : IContactDetailRepository
         });
         
         await _context.SaveChangesAsync();
-        
+
+        return null;
+
     }
 
     public async Task<ContactDetail> UpdateContactDetail(ContactDetailDto contactDetailDto, int userId)

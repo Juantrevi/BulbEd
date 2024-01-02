@@ -10,11 +10,10 @@ namespace BulbEd.Controllers;
 public class InstitutionController : BaseApiController
 {
     
-    private readonly IUnitOfWork _unitOfWork;
+    
     private readonly IInstituteService _instituteService;
-    public InstitutionController(IUnitOfWork unitOfWork, IInstituteService instituteService)
+    public InstitutionController(IInstituteService instituteService)
     {
-        _unitOfWork = unitOfWork;
         _instituteService = instituteService;
     }
     

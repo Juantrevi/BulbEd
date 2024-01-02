@@ -32,7 +32,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
         services.AddScoped<ITokenBlacklistService, TokenBlacklistService>();
         services.AddScoped<IInstitutionRepository, InstitutionRepository>();
-        services.AddScoped<IInstituteService, InstituteService>();
+        services.AddScoped<IInstituteService, InstitutionService>();
         
 
         
