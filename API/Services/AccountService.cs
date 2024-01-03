@@ -41,17 +41,17 @@ public class AccountService : IAccountService
         }
             
         // Check if the "Student" role exists
-        if(!await _roleManager.RoleExistsAsync("Student"))
+        if(!await _roleManager.RoleExistsAsync("student"))
         {
             // If not, create the "Student" role
-            var role = new AppRole { Name = "Student" };
+            var role = new AppRole { Name = "student" };
             await _roleManager.CreateAsync(role);
         }
 
         // Add the user to the "student" role
-        var roleResult = await _userManager.AddToRoleAsync(user, "Student");
+        var roleResult = await _userManager.AddToRoleAsync(user, "student");
         
-        await _unitOfWork.ContactDetailRepository.CreateContactDetail(user.Id);
+        await _unitOfWork.ContactDetailRepository.CreateContactDetailForUser(user.Id);
         
         
         if(!roleResult.Succeeded) throw new InvalidOperationException("Error occurred while adding role");

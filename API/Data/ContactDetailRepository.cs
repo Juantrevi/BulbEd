@@ -23,7 +23,7 @@ public class ContactDetailRepository : IContactDetailRepository
             .FirstOrDefaultAsync(cd => cd.AppUserId == userId);
     }
 
-    public async Task<ContactDetail> CreateContactDetail(int userId)
+    public async Task<ContactDetail> CreateContactDetailForUser(int userId)
     {
         _context.ContactDetails.Add(new ContactDetail
         {
@@ -33,7 +33,22 @@ public class ContactDetailRepository : IContactDetailRepository
         await _context.SaveChangesAsync();
 
         return null;
+    }
+    
+    public async Task<ContactDetail> CreateContactDetailForInstitution(int institutionId)
+    {
+        var institution = await _context.Institutions
+            .FirstOrDefaultAsync(i => i.Id == institutionId);
+        
+        _context.ContactDetails.Add(new ContactDetail
+        {
+            Institution = institution,
+            InstitutionId = institutionId,
+        });
+        
+        await _context.SaveChangesAsync();
 
+        return null;
     }
 
     public async Task<ContactDetail> UpdateContactDetail(ContactDetailDto contactDetailDto, int userId)

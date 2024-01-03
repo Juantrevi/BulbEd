@@ -13,11 +13,14 @@ public class UserController : BaseApiController
 {
     private readonly IUserService _userService;
     private readonly ITokenBlacklistService _tokenBlacklistService;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UserController(IUserService userService, ITokenBlacklistService tokenBlacklistService)
+
+    public UserController(IUserService userService, ITokenBlacklistService tokenBlacklistService, IUnitOfWork unitOfWork)
     {
         _userService = userService;
         _tokenBlacklistService = tokenBlacklistService;
+        _unitOfWork = unitOfWork;
     }
 
     

@@ -30,8 +30,9 @@ public class ContactDetail
     
     public int? AppUserId { get; set; }
     public Institution? Institution { get; set; }
-    
     public int? InstitutionId { get; set; }
+
+    //public int? InstitutionId { get; set; }
     
-    public int? ContactInstitutionId { get; set; }
+    //public int? ContactInstitutionId { get; set; }
 }

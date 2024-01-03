@@ -24,10 +24,12 @@ public class InstitutionService : IInstituteService
         var user = await _unitOfWork.UserRepository.GetAppUserByIdAsync(userId);
         if (user != null)
         {
-            //user.InstitutionId = institution.Id;
+            user.Institution = institution;
             _unitOfWork.UserRepository.Update(user);
-            await _unitOfWork.Complete();
         }
+        var contactDetail = await _unitOfWork.ContactDetailRepository.CreateContactDetailForInstitution(institution.Id);
+        
+        await _unitOfWork.Complete();
 
     }
 

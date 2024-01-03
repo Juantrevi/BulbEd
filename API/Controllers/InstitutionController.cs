@@ -12,9 +12,12 @@ public class InstitutionController : BaseApiController
     
     
     private readonly IInstituteService _instituteService;
-    public InstitutionController(IInstituteService instituteService)
+    private readonly IUnitOfWork _unitOfWork;
+    
+    public InstitutionController(IInstituteService instituteService, IUnitOfWork unitOfWork)
     {
         _instituteService = instituteService;
+        _unitOfWork = unitOfWork;
     }
     
     [HttpGet]
@@ -38,7 +41,7 @@ public class InstitutionController : BaseApiController
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         int id = int.Parse(userId);
         await _instituteService.CreateInstitute(institutionDto, id);
-        return Ok();
+        return Ok("Institution created");
     }
     
     [HttpPut("{id}")]

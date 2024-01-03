@@ -46,8 +46,8 @@ public class InstitutionRepository : IInstitutionRepository
 
     public async Task Delete(int id)
     {
-        var institution = _context.Institutions.Find(id);
-        _context.Institutions.Remove(institution);
+        var institution = await _context.Institutions.FindAsync(id);
+        if (institution != null) _context.Institutions.Remove(institution);
         await _context.SaveChangesAsync();
     }
 }
