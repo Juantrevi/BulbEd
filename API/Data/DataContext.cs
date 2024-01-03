@@ -58,6 +58,38 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
             .WithOne(c => c.Institution)
             .HasForeignKey<ContactDetail>(c => c.InstitutionId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        /**
+        * Courses Relations
+        * This is where we define the relationships between our entities
+        */
+        builder.Entity<Institution>()
+            .HasMany(i => i.Courses)
+            .WithOne(c => c.Institution)
+            .HasForeignKey(c => c.InstitutionId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.Entity<Course>()
+            .HasOne(c => c.Institution)
+            .WithMany(i => i.Courses)
+            .HasForeignKey(c => c.InstitutionId)
+            .OnDelete(DeleteBehavior.Cascade);
+            
+        /**
+        * Modules Relations
+        * This is where we define the relationships between our entities
+        */
+        builder.Entity<Course>()
+            .HasMany(c => c.Modules)
+            .WithOne(m => m.Course)
+            .HasForeignKey(m => m.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.Entity<Module>()
+            .HasOne(m => m.Course)
+            .WithMany(c => c.Modules)
+            .HasForeignKey(m => m.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         
     }
