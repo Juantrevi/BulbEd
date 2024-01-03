@@ -8,4 +8,5 @@ public class Course
     public Institution? Institution { get; set; }
     public ICollection<Module>? Modules { get; set; }
     public int? InstitutionId { get; set; }
+    public ICollection<UserCourse>? UserCourses { get; set; }
 }
