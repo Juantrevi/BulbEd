@@ -62,27 +62,27 @@ public class AccountService : IAccountService
         };
     }
 
-public async Task<UserDto> LoginAsync(LoginDto loginDto)
-{
-    
-    var user = await _userManager.Users
-        .Include(p => p.Photo)
-        .SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
-
-    if(user == null) throw new ArgumentException("Invalid email");
-
-    var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
-
-    if(!result) throw new ArgumentException("Invalid Password");
-
-    return new UserDto
+    public async Task<UserDto> LoginAsync(LoginDto loginDto)
     {
-        Id = user.Id,
-        Email = user.UserName,
-        Token = await _tokenService.CreateToken(user),
-        PhotoUrl = user.Photo?.Url
-    };
-}
+        
+        var user = await _userManager.Users
+            .Include(p => p.Photo)
+            .SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
+
+        if(user == null) throw new ArgumentException("Invalid email");
+
+        var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+
+        if(!result) throw new ArgumentException("Invalid Password");
+
+        return new UserDto
+        {
+            Id = user.Id,
+            Email = user.UserName,
+            Token = await _tokenService.CreateToken(user),
+            PhotoUrl = user.Photo?.Url
+        };
+    }
 
     private UserDto Unauthorized(string invalidUsername)
     {

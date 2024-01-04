@@ -1,15 +1,16 @@
-﻿using System.Net;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Text.Json;
 using BulbEd.Errors;
+using BulbEd.Errors.Exceptions;
 
 namespace BulbEd.Middleware;
 
 public class ExceptionMiddleware
 {
-    
-    readonly RequestDelegate _next;
-    readonly ILogger<ExceptionMiddleware> _logger;
-    readonly IHostEnvironment _env;
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionMiddleware> _logger;
+    private readonly IHostEnvironment _env;
     
     public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
     {
@@ -18,29 +19,40 @@ public class ExceptionMiddleware
         _env = env;
     }
     
-    public async Task InvokeAsync(HttpContext context)
+public async Task InvokeAsync(HttpContext context)
+{
+    try
     {
-        try
-        {
-            await _next(context);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Something went wrong: {ex}, {ex.Message}");
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-
-            var response = _env.IsDevelopment()
-                ? new ApiException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
-                : new ApiException(context.Response.StatusCode, "Internal Server Error");
-
-            var options = new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
-
-            var json = JsonSerializer.Serialize(response, options);
-
-            await context.Response.WriteAsync(json);
-        }
+        await _next(context);
     }
+    catch (ValidationException ex)
+    {
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        await WriteResponse(context, new ApiException(context.Response.StatusCode, ex.Message));
+    }
+    catch (NotFoundException ex)
+    {
+        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+        await WriteResponse(context, new ApiException(context.Response.StatusCode, ex.Message));
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError($"Something went wrong: {ex}, {ex.Message}");
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        var response = _env.IsDevelopment()
+            ? new ApiException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
+            : new ApiException(context.Response.StatusCode, "Internal Server Error");
+        await WriteResponse(context, response);
+    }
+}
+
+private async Task WriteResponse(HttpContext context, ApiException response)
+{
+    context.Response.ContentType = "application/json";
+    var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+    var json = JsonSerializer.Serialize(response, options);
+    await context.Response.WriteAsync(json);
+}
 
 
 }

@@ -17,9 +17,9 @@ public class ClassScheduleRepository : IClassScheduleRepository
         _mapper = mapper;
     }
     
-public async Task<IEnumerable<ClassScheduleDto>> GetClassSchedulesAsync()
+public async Task<IEnumerable<ClassSchedule>> GetClassSchedulesAsync()
 {
     var classSchedules = await _context.ClassSchedules.Include(cs => cs.Module).ThenInclude(m => m.Course).ToListAsync();
-    return _mapper.Map<IEnumerable<ClassScheduleDto>>(classSchedules);
+    return classSchedules;
 }
 }

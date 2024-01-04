@@ -26,11 +26,19 @@ public class AutoMapperProfiles : Profile
         CreateMap<Institution, InstitutionDto>();
         CreateMap<InstitutionDto, Institution>();
         
-        CreateMap<ClassSchedule, ClassScheduleDto>()
-    .ForMember(dest => dest.DayOfWeek, opt => opt.MapFrom(src => src.DayOfWeek.ToString()))
-    .ForMember(dest => dest.TimeOfDay, opt => opt.MapFrom(src => src.TimeOfDay.ToString()))
-    .ForMember(dest => dest.ModuleName, opt => opt.MapFrom(src => src.Module.Name))
-    .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Module.Course.Name));
+CreateMap<ClassSchedule, ClassScheduleDto>()
+    .ForMember(dest => dest.DayOfWeek,
+        opt => opt.MapFrom(src => src.DayOfWeek))
+    .ForMember(dest => dest.TimeOfDay,
+        opt => opt.MapFrom(src => src.TimeOfDay))
+    .ForMember(dest => dest.ModuleName,
+        opt => opt.MapFrom(src => src.Module.Name))
+    .ForMember(dest => dest.CourseData,
+        opt => opt.MapFrom(src => new Dictionary<string, object>
+        {
+            { "courseId", src.Module.Course.Id },
+            { "courseName", src.Module.Course.Name }
+        }));
 
     }
 }

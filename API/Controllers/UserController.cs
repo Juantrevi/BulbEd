@@ -41,8 +41,8 @@ public class UserController : BaseApiController
     }
     
     
-    //[Authorize(Policy = "RequireStudentRole")]
-    [Authorize(Policy = "RequireAdminRole")]
+    [Authorize(Policy = "RequireStudentRole")]
+    //[Authorize(Policy = "RequireAdminRole")]
     [HttpGet("user/{id:int}")]
     public async Task<ActionResult<MemberDto>> GetUser(int id)
     {
@@ -67,11 +67,5 @@ public class UserController : BaseApiController
 
         return Ok("User logged out successfully");
     }
-    
-    [HttpGet("class-schedules")]
-    public async Task<ActionResult<IEnumerable<ClassScheduleDto>>> GetClassSchedules()
-    {
-        var classSchedules = await _classScheduleService.GetClassSchedulesAsync();
-        return Ok(classSchedules);
-    }
+
 }

@@ -5,5 +5,5 @@ namespace BulbEd.Interfaces;
 
 public interface IClassScheduleRepository
 {
-    Task<IEnumerable<ClassScheduleDto>> GetClassSchedulesAsync();
+    Task<IEnumerable<ClassSchedule>> GetClassSchedulesAsync();
 }

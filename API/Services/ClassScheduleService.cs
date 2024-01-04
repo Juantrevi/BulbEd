@@ -1,4 +1,5 @@
-﻿using BulbEd.DTOs;
+﻿using AutoMapper;
+using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
 
@@ -7,18 +8,21 @@ namespace BulbEd.Services;
 public class ClassScheduleService : IClassScheduleService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
     
-    public ClassScheduleService(IUnitOfWork unitOfWork)
+    public ClassScheduleService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
 
-    public Task<IEnumerable<ClassScheduleDto>> GetClassSchedulesAsync()
+    public async Task<IEnumerable<ClassScheduleDto>> GetClassSchedulesAsync()
     {
-        var classSchedules = _unitOfWork.ClassScheduleRepository.GetClassSchedulesAsync();
-        _unitOfWork.Complete();
-        return classSchedules;
+        var classSchedules = await _unitOfWork.ClassScheduleRepository.GetClassSchedulesAsync();
+        var classSchedulesDto = _mapper.Map<IEnumerable<ClassScheduleDto>>(classSchedules);
+        
+        return classSchedulesDto;
         
     }
 }
