@@ -33,6 +33,8 @@ public static class ApplicationServiceExtensions
         services.AddScoped<ITokenBlacklistService, TokenBlacklistService>();
         services.AddScoped<IInstitutionRepository, InstitutionRepository>();
         services.AddScoped<IInstituteService, InstitutionService>();
+        services.AddScoped<IClassScheduleRepository, ClassScheduleRepository>();
+        services.AddScoped<IClassScheduleService, ClassScheduleService>();
         
 
         

@@ -21,6 +21,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Module> Modules { get; set; }
+    public DbSet<ClassSchedule> ClassSchedules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

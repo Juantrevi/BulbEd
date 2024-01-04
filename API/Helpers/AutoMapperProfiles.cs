@@ -25,6 +25,12 @@ public class AutoMapperProfiles : Profile
         CreateMap<ContactDetailDto, ContactDetail>();
         CreateMap<Institution, InstitutionDto>();
         CreateMap<InstitutionDto, Institution>();
+        
+        CreateMap<ClassSchedule, ClassScheduleDto>()
+    .ForMember(dest => dest.DayOfWeek, opt => opt.MapFrom(src => src.DayOfWeek.ToString()))
+    .ForMember(dest => dest.TimeOfDay, opt => opt.MapFrom(src => src.TimeOfDay.ToString()))
+    .ForMember(dest => dest.ModuleName, opt => opt.MapFrom(src => src.Module.Name))
+    .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Module.Course.Name));
 
     }
 }

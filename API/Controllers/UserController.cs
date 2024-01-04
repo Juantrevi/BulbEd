@@ -14,13 +14,15 @@ public class UserController : BaseApiController
     private readonly IUserService _userService;
     private readonly ITokenBlacklistService _tokenBlacklistService;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IClassScheduleService _classScheduleService;
 
 
-    public UserController(IUserService userService, ITokenBlacklistService tokenBlacklistService, IUnitOfWork unitOfWork)
+    public UserController(IUserService userService, ITokenBlacklistService tokenBlacklistService, IUnitOfWork unitOfWork, IClassScheduleService classScheduleService)
     {
         _userService = userService;
         _tokenBlacklistService = tokenBlacklistService;
         _unitOfWork = unitOfWork;
+        _classScheduleService = classScheduleService;
     }
 
     
@@ -64,5 +66,12 @@ public class UserController : BaseApiController
         await _tokenBlacklistService.AddToken(token, DateTime.UtcNow.AddHours(1)); // Token will be blacklisted for 1 hour
 
         return Ok("User logged out successfully");
+    }
+    
+    [HttpGet("class-schedules")]
+    public async Task<ActionResult<IEnumerable<ClassScheduleDto>>> GetClassSchedules()
+    {
+        var classSchedules = await _classScheduleService.GetClassSchedulesAsync();
+        return Ok(classSchedules);
     }
 }
