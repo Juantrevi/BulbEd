@@ -30,14 +30,16 @@ public class UserController : BaseApiController
     [HttpGet("users")]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
     {
-        return Ok(await _unitOfWork.UserRepository.GetUsersAsync());
+        var users = await _userService.GetUsersAsync();
+        return Ok(users);
     }
 
     
-    [HttpGet("user/{username:alpha}")]
-    public async Task<ActionResult<MemberDto>> GetUser(string username)
+    [HttpGet("user/{emailAddress}")]
+    public async Task<ActionResult<MemberDto>> GetUser(string emailAddress)
     {
-        return await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+        var user = await _userService.GetUserByEmailAddressAsync(emailAddress);
+        return Ok(user);
     }
     
     
@@ -46,7 +48,8 @@ public class UserController : BaseApiController
     [HttpGet("user/{id:int}")]
     public async Task<ActionResult<MemberDto>> GetUser(int id)
     {
-        return await _unitOfWork.UserRepository.GetUserByIdAsync(id);
+        var user = await _userService.GetUserByIdAsync(id);
+        return Ok(user);
     }
     
 

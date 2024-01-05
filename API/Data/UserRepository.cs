@@ -63,5 +63,14 @@ namespace BulbEd.Data
         {
             _context.Entry(user).State = EntityState.Modified;
         }
+        
+        public async Task <MemberDto> GetUserByEmailAddressAsync(string emailAddress)
+        {
+            var user = await 
+                GetUsersWithIncludes()
+                .SingleOrDefaultAsync(x => x.Email == emailAddress);
+
+            return _mapper.Map<MemberDto>(user);
+        }
     }
 }

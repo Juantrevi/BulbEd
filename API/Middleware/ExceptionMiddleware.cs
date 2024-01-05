@@ -46,7 +46,7 @@ public async Task InvokeAsync(HttpContext context)
     }
 }
 
-private async Task WriteResponse(HttpContext context, ApiException response)
+private static async Task WriteResponse(HttpContext context, ApiException response)
 {
     context.Response.ContentType = "application/json";
     var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };

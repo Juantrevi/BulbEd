@@ -14,6 +14,7 @@ public interface IUserRepository
     Task<MemberDto> GetUserByUsernameAsync(string username);
     
     Task<AppUser> GetAppUserByIdAsync(int id);
-    
-    
+
+
+    Task<MemberDto> GetUserByEmailAddressAsync(string emailAddress);
 }
