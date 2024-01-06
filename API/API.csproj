@@ -36,4 +36,13 @@
       <Folder Include="SignalR\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="BulbEd-Client\angular.json" />
+      <_ContentIncludedByDefault Remove="BulbEd-Client\package-lock.json" />
+      <_ContentIncludedByDefault Remove="BulbEd-Client\package.json" />
+      <_ContentIncludedByDefault Remove="BulbEd-Client\tsconfig.app.json" />
+      <_ContentIncludedByDefault Remove="BulbEd-Client\tsconfig.json" />
+      <_ContentIncludedByDefault Remove="BulbEd-Client\tsconfig.spec.json" />
+    </ItemGroup>
+
 </Project>

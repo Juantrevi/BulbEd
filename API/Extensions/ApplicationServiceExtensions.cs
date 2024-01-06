@@ -4,6 +4,7 @@ using BulbEd.Helpers;
 using BulbEd.Interfaces;
 using BulbEd.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace BulbEd.Extensions;
 
@@ -11,6 +12,13 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAngularApp",
+                builder => builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+        });
 
         services.AddDbContext<DataContext>(opt =>
         {
@@ -37,10 +45,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IClassScheduleService, ClassScheduleService>();
         
 
-        
-        
-        
-
         return services;
     }
+    
 }

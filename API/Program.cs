@@ -16,6 +16,7 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -27,6 +28,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseMiddleware<TokenBlacklistMiddleware>();
+app.UseCors("AllowAngularApp");
 app.UseAuthorization();
 
 app.MapControllers();
