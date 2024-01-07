@@ -1,0 +1,8 @@
+<form [formGroup]="createInstitutionForm" (ngSubmit)="onSubmit()">
+  <label for="name">Name</label>
+  <input id="name" type="text" formControlName="name">
+
+  <!-- Other form inputs... -->
+
+  <button type="submit">Create Institution</button>
+</form>

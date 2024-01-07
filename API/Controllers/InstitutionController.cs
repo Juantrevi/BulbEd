@@ -41,7 +41,7 @@ public class InstitutionController : BaseApiController
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         int id = int.Parse(userId);
         await _instituteService.CreateInstitute(institutionDto, id);
-        return Ok("Institution created");
+        return Ok(new { message = "Institution created" });
     }
     
     [HttpPut("{id}")]

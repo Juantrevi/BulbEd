@@ -9,9 +9,11 @@ import {JwtInterceptor} from "./_interceptors/jwt.interceptor";
 import {ErrorInterceptor} from "./_interceptors/error.interceptor";
 import {HomeComponent} from "./home/home.component";
 import {NavComponent} from "./nav/nav.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
 import { UserDashComponent } from './user-dash/user-dash.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -19,8 +21,10 @@ import { UserDashComponent } from './user-dash/user-dash.component';
     HomeComponent,
     NavComponent,
     UserDashComponent,
+    AdminPanelComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
@@ -29,7 +33,8 @@ import { UserDashComponent } from './user-dash/user-dash.component';
       {
         positionClass: 'toast-bottom-right'
       }
-    )
+    ),
+    ReactiveFormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
