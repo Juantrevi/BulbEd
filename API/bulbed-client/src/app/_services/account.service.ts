@@ -9,7 +9,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class AccountService {
 
-  baseUrl = environment.apiUrl;
+  baseUrl = 'https://localhost:5001/api/';
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
   constructor(private http: HttpClient) { }

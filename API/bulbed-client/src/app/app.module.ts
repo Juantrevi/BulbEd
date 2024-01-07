@@ -11,12 +11,14 @@ import {HomeComponent} from "./home/home.component";
 import {NavComponent} from "./nav/nav.component";
 import {FormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
+import { UserDashComponent } from './user-dash/user-dash.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavComponent
+    NavComponent,
+    UserDashComponent,
   ],
   imports: [
     BrowserModule,

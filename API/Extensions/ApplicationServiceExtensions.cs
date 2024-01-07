@@ -15,7 +15,7 @@ public static class ApplicationServiceExtensions
         services.AddCors(options =>
         {
             options.AddPolicy("AllowAngularApp",
-                builder => builder.WithOrigins("http://localhost:4200")
+                builder => builder.WithOrigins("http://localhost:4300")
                     .AllowAnyHeader()
                     .AllowAnyMethod());
         });

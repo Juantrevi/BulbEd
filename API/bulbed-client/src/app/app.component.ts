@@ -1,7 +1,7 @@
 // src/app/app.component.ts
 import { Component, OnInit } from '@angular/core';
-import { ClassScheduleService } from './services/class-schedule-service';
-import {AccountService} from "./services/account.service";
+import { ClassScheduleService } from './_services/class-schedule-service';
+import {AccountService} from "./_services/account.service";
 
 @Component({
   selector: 'app-root',

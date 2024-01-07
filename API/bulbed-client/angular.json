@@ -5,7 +5,14 @@
   "projects": {
     "bulbed-client": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "css",
+          "skipTests": true,
+          "standalone": false,
+          "module": "app"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
