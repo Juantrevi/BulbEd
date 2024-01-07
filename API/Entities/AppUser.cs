@@ -36,5 +36,7 @@ public class AppUser : IdentityUser<int>
     public new int? AccessFailedCount { get; set; }
     public ICollection<UserCourse>? UserCourses { get; set; }
     public ICollection<UserModule>? UserModules { get; set; }
+    
+    public ICollection<Institution> CreatedInstitutions { get; set; }
 
 }

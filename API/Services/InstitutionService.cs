@@ -16,22 +16,22 @@ public class InstitutionService : IInstituteService
         _mapper = mapper;
     }
 
-    public async Task CreateInstitute(InstitutionDto institutionDto, int userId)
+public async Task CreateInstitute(InstitutionDto institutionDto, int userId)
+{
+    var institution = _mapper.Map<Institution>(institutionDto);
+    await _unitOfWork.InstitutionRepository.Create(institution);
+
+    var user = await _unitOfWork.UserRepository.GetAppUserByIdAsync(userId);
+    if (user == null)
     {
-        var institution = _mapper.Map<Institution>(institutionDto);
-        await _unitOfWork.InstitutionRepository.Create(institution);
-
-        var user = await _unitOfWork.UserRepository.GetAppUserByIdAsync(userId);
-        if (user != null)
-        {
-            user.Institution = institution;
-            _unitOfWork.UserRepository.Update(user);
-        }
-        var contactDetail = await _unitOfWork.ContactDetailRepository.CreateContactDetailForInstitution(institution.Id);
-        
-        await _unitOfWork.Complete();
-
+        throw new Exception("Invalid user id");
     }
+
+    institution.CreatedBy = user;
+    var contactDetail = await _unitOfWork.ContactDetailRepository.CreateContactDetailForInstitution(institution.Id);
+
+    await _unitOfWork.Complete();
+}
 
     public async Task DeleteInstitute(int id)
     {

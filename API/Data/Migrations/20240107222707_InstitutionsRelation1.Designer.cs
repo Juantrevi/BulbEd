@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulbEd.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240103023954_InitialCreate3")]
-    partial class InitialCreate3
+    [Migration("20240107222707_InstitutionsRelation1")]
+    partial class InstitutionsRelation1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,9 @@ namespace BulbEd.Data.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("InstitutionId")
                         .HasColumnType("int");
 
@@ -133,6 +136,8 @@ namespace BulbEd.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GroupId");
+
                     b.HasIndex("InstitutionId");
 
                     b.HasIndex("NormalizedEmail")
@@ -143,6 +148,28 @@ namespace BulbEd.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.ClassSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TimeOfDay")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("ClassSchedules");
                 });
 
             modelBuilder.Entity("BulbEd.Entities.ContactDetail", b =>
@@ -221,6 +248,22 @@ namespace BulbEd.Data.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("BulbEd.Entities.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("Group");
+                });
+
             modelBuilder.Entity("BulbEd.Entities.Institution", b =>
                 {
                     b.Property<int>("Id")
@@ -230,10 +273,15 @@ namespace BulbEd.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("Institutions");
                 });
@@ -244,7 +292,7 @@ namespace BulbEd.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -295,6 +343,36 @@ namespace BulbEd.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TokenBlackLists");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.UserCourse", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("UserCourse");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.UserModule", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ModuleId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("UserModule");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -408,11 +486,24 @@ namespace BulbEd.Data.Migrations
 
             modelBuilder.Entity("BulbEd.Entities.AppUser", b =>
                 {
+                    b.HasOne("BulbEd.Entities.Group", null)
+                        .WithMany("Users")
+                        .HasForeignKey("GroupId");
+
                     b.HasOne("BulbEd.Entities.Institution", "Institution")
                         .WithMany("Users")
                         .HasForeignKey("InstitutionId");
 
                     b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.ClassSchedule", b =>
+                {
+                    b.HasOne("BulbEd.Entities.Module", "Module")
+                        .WithMany("ClassSchedules")
+                        .HasForeignKey("ModuleId");
+
+                    b.Navigation("Module");
                 });
 
             modelBuilder.Entity("BulbEd.Entities.ContactDetail", b =>
@@ -442,13 +533,30 @@ namespace BulbEd.Data.Migrations
                     b.Navigation("Institution");
                 });
 
+            modelBuilder.Entity("BulbEd.Entities.Group", b =>
+                {
+                    b.HasOne("BulbEd.Entities.Module", "Module")
+                        .WithMany("Groups")
+                        .HasForeignKey("ModuleId");
+
+                    b.Navigation("Module");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.Institution", b =>
+                {
+                    b.HasOne("BulbEd.Entities.AppUser", "CreatedBy")
+                        .WithMany("CreatedInstitutions")
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
             modelBuilder.Entity("BulbEd.Entities.Module", b =>
                 {
                     b.HasOne("BulbEd.Entities.Course", "Course")
                         .WithMany("Modules")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Course");
                 });
@@ -462,6 +570,44 @@ namespace BulbEd.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.UserCourse", b =>
+                {
+                    b.HasOne("BulbEd.Entities.Course", "Course")
+                        .WithMany("UserCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BulbEd.Entities.AppUser", "User")
+                        .WithMany("UserCourses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.UserModule", b =>
+                {
+                    b.HasOne("BulbEd.Entities.Module", "Module")
+                        .WithMany("UserModules")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BulbEd.Entities.AppUser", "User")
+                        .WithMany("UserModules")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -532,7 +678,13 @@ namespace BulbEd.Data.Migrations
                 {
                     b.Navigation("ContactDetail");
 
+                    b.Navigation("CreatedInstitutions");
+
                     b.Navigation("Photo");
+
+                    b.Navigation("UserCourses");
+
+                    b.Navigation("UserModules");
 
                     b.Navigation("UserRoles");
                 });
@@ -540,6 +692,13 @@ namespace BulbEd.Data.Migrations
             modelBuilder.Entity("BulbEd.Entities.Course", b =>
                 {
                     b.Navigation("Modules");
+
+                    b.Navigation("UserCourses");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.Group", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("BulbEd.Entities.Institution", b =>
@@ -549,6 +708,15 @@ namespace BulbEd.Data.Migrations
                     b.Navigation("Courses");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("BulbEd.Entities.Module", b =>
+                {
+                    b.Navigation("ClassSchedules");
+
+                    b.Navigation("Groups");
+
+                    b.Navigation("UserModules");
                 });
 #pragma warning restore 612, 618
         }

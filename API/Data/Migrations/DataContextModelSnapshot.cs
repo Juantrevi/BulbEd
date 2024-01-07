@@ -270,10 +270,15 @@ namespace BulbEd.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("Institutions");
                 });
@@ -534,6 +539,15 @@ namespace BulbEd.Data.Migrations
                     b.Navigation("Module");
                 });
 
+            modelBuilder.Entity("BulbEd.Entities.Institution", b =>
+                {
+                    b.HasOne("BulbEd.Entities.AppUser", "CreatedBy")
+                        .WithMany("CreatedInstitutions")
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
             modelBuilder.Entity("BulbEd.Entities.Module", b =>
                 {
                     b.HasOne("BulbEd.Entities.Course", "Course")
@@ -660,6 +674,8 @@ namespace BulbEd.Data.Migrations
             modelBuilder.Entity("BulbEd.Entities.AppUser", b =>
                 {
                     b.Navigation("ContactDetail");
+
+                    b.Navigation("CreatedInstitutions");
 
                     b.Navigation("Photo");
 

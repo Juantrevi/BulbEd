@@ -12,5 +12,8 @@ public class Institution
     
     public ICollection<Course>? Courses { get; set; }
     
-    public DateTime Created { get; set; }
+    public AppUser? CreatedBy { get; set; }
+    public int? CreatedById { get; set; }
+
+    public DateTime Created { get; set; } = DateTime.UtcNow;
 }

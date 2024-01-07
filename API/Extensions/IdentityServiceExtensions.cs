@@ -54,6 +54,7 @@ public static class IdentityServiceExtensions
 
             opt.AddPolicy("RequireStudentRole", policy => policy.RequireRole("student"));
             opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"));
+            opt.AddPolicy("RequireSuperAdminRole", policy => policy.RequireRole("superadmin"));
 
         });
 

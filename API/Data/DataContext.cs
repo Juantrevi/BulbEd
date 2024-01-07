@@ -131,6 +131,11 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int
             .HasOne(g => g.Module)
             .WithMany(m => m.Groups)
             .HasForeignKey(g => g.ModuleId);
+        
+        builder.Entity<Institution>()
+            .HasOne(i => i.CreatedBy)
+            .WithMany(u => u.CreatedInstitutions)
+            .HasForeignKey(i => i.CreatedById);
     }
 
 }
