@@ -20,7 +20,6 @@ public interface IUserService
     
     Task<MemberDto> GetUserByEmailAddressAsync(string emailAddress);
     
-    Task<AppUser> CreateSuperAdmin(CreateSuperAdminModel createSuperAdminModel);
     
     
     

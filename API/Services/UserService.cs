@@ -111,28 +111,4 @@ public class UserService : IUserService
         }
     }
     
-    public async Task<AppUser> CreateSuperAdmin(CreateSuperAdminModel model)
-    {
-        var password = GenerateRandomPassword();
-        var user = _mapper.Map<AppUser>(model);
-        user.InitialPassword = password;
-        user.IsPasswordChangeRequired = true;
-
-        var result = await _userManager.CreateAsync(user, password);
-        if (result.Succeeded)
-        {
-            await _emailService.SendPasswordEmail(model.Email, password);
-            return user;
-        }
-        else
-        {
-            throw new Exception("Error occurred while creating superadmin user");
-        }
-    }
-
-    private static string GenerateRandomPassword()
-    {
-        return "Pa$$w0rd";
-    }
-    
 }

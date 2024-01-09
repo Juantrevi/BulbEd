@@ -40,7 +40,7 @@ CreateMap<ClassSchedule, ClassScheduleDto>()
             { "courseName", src.Module.Course.Name }
         }));
 
-CreateMap<CreateSuperAdminModel, AppUser>();
+
 
     }
 }

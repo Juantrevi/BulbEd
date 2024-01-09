@@ -71,18 +71,5 @@ public class UserController : BaseApiController
         return Ok("User logged out successfully");
     }
     
-    [HttpPost("create-admin")]
-    public async Task<ActionResult<AppUser>> CreateSuperAdmin(CreateSuperAdminModel model)
-    {
-        try
-        {
-            var user = await _userService.CreateSuperAdmin(model);
-            return Ok(user);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
 
 }
