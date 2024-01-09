@@ -43,6 +43,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IInstituteService, InstitutionService>();
         services.AddScoped<IClassScheduleRepository, ClassScheduleRepository>();
         services.AddScoped<IClassScheduleService, ClassScheduleService>();
+        services.AddScoped<IEmailService, EmailService>();
         
 
         return services;

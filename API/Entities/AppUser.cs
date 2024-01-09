@@ -18,6 +18,7 @@ public class AppUser : IdentityUser<int>
     public ContactDetail? ContactDetail { get; set; }
     
     public AppUserStatus? Status { get; set; }
+    
     public Institution? Institution { get; set; }
     
     public DateOnly? DateOfBirth { get; set; }
@@ -38,5 +39,9 @@ public class AppUser : IdentityUser<int>
     public ICollection<UserModule>? UserModules { get; set; }
     
     public ICollection<Institution> CreatedInstitutions { get; set; }
+    
+    public string? InitialPassword { get; set; }
+    public bool IsPasswordChangeRequired { get; set; } = true;
+    public string? Role { get; set; }
 
 }

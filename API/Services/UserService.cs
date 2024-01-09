@@ -15,12 +15,14 @@ public class UserService : IUserService
     private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IEmailService _emailService;
 
-    public UserService(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unitOfWork)
+    public UserService(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unitOfWork, IEmailService emailService)
     {
         _userManager = userManager;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _emailService = emailService;
     }
     
 
@@ -108,4 +110,29 @@ public class UserService : IUserService
             throw new NotFoundException("Error occurred while getting user by email address, user not found");
         }
     }
+    
+    public async Task<AppUser> CreateSuperAdmin(CreateSuperAdminModel model)
+    {
+        var password = GenerateRandomPassword();
+        var user = _mapper.Map<AppUser>(model);
+        user.InitialPassword = password;
+        user.IsPasswordChangeRequired = true;
+
+        var result = await _userManager.CreateAsync(user, password);
+        if (result.Succeeded)
+        {
+            await _emailService.SendPasswordEmail(model.Email, password);
+            return user;
+        }
+        else
+        {
+            throw new Exception("Error occurred while creating superadmin user");
+        }
+    }
+
+    private static string GenerateRandomPassword()
+    {
+        return "Pa$$w0rd";
+    }
+    
 }

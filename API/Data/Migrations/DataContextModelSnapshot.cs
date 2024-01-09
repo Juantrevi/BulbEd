@@ -82,8 +82,14 @@ namespace BulbEd.Data.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
+                    b.Property<string>("InitialPassword")
+                        .HasColumnType("longtext");
+
                     b.Property<int?>("InstitutionId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsPasswordChangeRequired")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime?>("LastActive")
                         .HasColumnType("datetime(6)");
@@ -114,6 +120,9 @@ namespace BulbEd.Data.Migrations
 
                     b.Property<bool?>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
