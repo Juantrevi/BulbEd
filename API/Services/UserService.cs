@@ -15,14 +15,14 @@ public class UserService : IUserService
     private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IEmailService _emailService;
 
-    public UserService(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unitOfWork, IEmailService emailService)
+
+    public UserService(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _emailService = emailService;
+
     }
     
 
