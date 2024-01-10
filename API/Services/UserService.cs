@@ -1,12 +1,10 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using BulbEd.Data;
 using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Errors.Exceptions;
 using BulbEd.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace BulbEd.Services;
 

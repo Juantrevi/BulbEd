@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "X4kJUig7R9RIS+YoASVMhwu9b//bmW16lJ3Ct3lG8zRbEq8j19BgsrZiJyzDjmuG5IjE3+V3zJckSavkkwZy9A==",
+  "dgSpecHash": "fBQfbBuQAfBfSlXX/NKvCLY4z2SFkL/5ZhJt68jcpN8hRGQlmGH7i5LgzaEsmi6S5PDRQ+e3n2yf3UgmRHdmTQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\juant\\OneDrive\\Escritorio\\BulbEd\\API\\API\\API.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\juant\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\juant\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\juant\\.nuget\\packages\\cloudinarydotnet\\1.24.0\\cloudinarydotnet.1.24.0.nupkg.sha512",
+    "C:\\Users\\juant\\.nuget\\packages\\fluentemail.core\\3.0.2\\fluentemail.core.3.0.2.nupkg.sha512",
+    "C:\\Users\\juant\\.nuget\\packages\\fluentemail.mailgun\\3.0.2\\fluentemail.mailgun.3.0.2.nupkg.sha512",
     "C:\\Users\\juant\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
     "C:\\Users\\juant\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\juant\\.nuget\\packages\\k4os.compression.lz4\\1.3.5\\k4os.compression.lz4.1.3.5.nupkg.sha512",

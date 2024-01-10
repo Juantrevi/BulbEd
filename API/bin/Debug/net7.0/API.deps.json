@@ -10,6 +10,7 @@
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "CloudinaryDotNet": "1.24.0",
+          "FluentEmail.Mailgun": "3.0.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.14",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.14",
           "Microsoft.AspNetCore.OpenApi": "7.0.13",
@@ -66,6 +67,29 @@
           "lib/netstandard2.0/CloudinaryDotNet.dll": {
             "assemblyVersion": "1.24.0.0",
             "fileVersion": "1.24.0.0"
+          }
+        }
+      },
+      "FluentEmail.Core/3.0.2": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentEmail.Core.dll": {
+            "assemblyVersion": "3.0.2.0",
+            "fileVersion": "3.0.2.0"
+          }
+        }
+      },
+      "FluentEmail.Mailgun/3.0.2": {
+        "dependencies": {
+          "FluentEmail.Core": "3.0.2",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentEmail.Mailgun.dll": {
+            "assemblyVersion": "3.0.2.0",
+            "fileVersion": "3.0.2.0"
           }
         }
       },
@@ -1109,6 +1133,20 @@
       "sha512": "sha512-abHns5LpQnmRmaAKvY/BoSJ24RswmBno+O2rFTcywor5bEMl46cZzIBIvayrzvoFnVRyXO3T81x7xCtpPA0+6Q==",
       "path": "cloudinarydotnet/1.24.0",
       "hashPath": "cloudinarydotnet.1.24.0.nupkg.sha512"
+    },
+    "FluentEmail.Core/3.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uQFFbJgMhhCFUti7pfMi429fMNi7fLGMj+7uDtD7POlQzLxlhXJ6tmt4Y1SI51sZsA36GO5b7+o29eY/dKiICQ==",
+      "path": "fluentemail.core/3.0.2",
+      "hashPath": "fluentemail.core.3.0.2.nupkg.sha512"
+    },
+    "FluentEmail.Mailgun/3.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9nC9jhlNWQgqhWFpi1h4KYDqP26adAMrGxulP/jVlDa1jy0lyk5Xanu+apXR3YwfVEkXW1QNzlSEjTu94KJ+Ew==",
+      "path": "fluentemail.mailgun/3.0.2",
+      "hashPath": "fluentemail.mailgun.3.0.2.nupkg.sha512"
     },
     "Google.Protobuf/3.21.9": {
       "type": "package",

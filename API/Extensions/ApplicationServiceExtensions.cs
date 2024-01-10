@@ -1,4 +1,5 @@
-﻿using BulbEd.Data;
+﻿using System.Configuration;
+using BulbEd.Data;
 using BulbEd.Entities;
 using BulbEd.Helpers;
 using BulbEd.Interfaces;
@@ -26,6 +27,18 @@ public static class ApplicationServiceExtensions
                 ServerVersion.AutoDetect(config.GetConnectionString("DefaultConnection")));
         });
 
+        
+
+
+
+
+    var mailgunSettings = config.GetSection("Mailgun");
+    services
+        .AddFluentEmail("no-reply@bulbed.com")
+        .AddMailGunSender(mailgunSettings["Domain"],
+            mailgunSettings["ApiKey"]);
+
+
         // Add services to the container.
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddControllers();
@@ -43,6 +56,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IInstituteService, InstitutionService>();
         services.AddScoped<IClassScheduleRepository, ClassScheduleRepository>();
         services.AddScoped<IClassScheduleService, ClassScheduleService>();
+        services.AddScoped<IEmailSender, EmailSenderService>();
         
 
         return services;
