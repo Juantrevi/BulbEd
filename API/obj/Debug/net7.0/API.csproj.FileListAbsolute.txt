@@ -1,5 +1,4 @@
 C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\appsettings.Development.json
-C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\appsettings.json
 C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\API.exe
 C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\API.deps.json
 C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\API.runtimeconfig.json
@@ -92,3 +91,4 @@ C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\bulbed-client
 C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\bulbed-client\tsconfig.spec.json
 C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\FluentEmail.Core.dll
 C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\FluentEmail.Mailgun.dll
+C:\Users\juant\OneDrive\Escritorio\BulbEd\API\API\bin\Debug\net7.0\appsettings.json
