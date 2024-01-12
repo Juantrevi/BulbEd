@@ -33,6 +33,7 @@ public async Task CreateInstitute(InstitutionDto institutionDto, int userId)
     await _unitOfWork.Complete();
 }
 
+
     public async Task DeleteInstitute(int id)
     {
         await _unitOfWork.InstitutionRepository.Delete(id);
