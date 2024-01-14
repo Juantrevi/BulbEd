@@ -3,7 +3,9 @@ using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace BulbEd.Services;
 
@@ -14,14 +16,21 @@ public class AccountService : IAccountService
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IEmailSender _emailSender;
 
-    public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ITokenService tokenService, IMapper mapper, IUnitOfWork unitOfWork)
+    public AccountService(UserManager<AppUser> userManager, 
+        RoleManager<AppRole> roleManager, 
+        ITokenService tokenService, 
+        IMapper mapper, 
+        IUnitOfWork unitOfWork,
+        IEmailSender emailSender)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _tokenService = tokenService;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _emailSender = emailSender;
     }
 
     public async Task<UserDto> RegisterAsync(RegisterDto registerDto)
@@ -93,4 +102,32 @@ public class AccountService : IAccountService
     {
         return await _userManager.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
     }
+    
+
+    public async Task<(bool, string)> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+    {
+        var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+        if (user == null)
+            return (false, "Invalid email address");
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var message = $"Please reset your password by clicking the link we have sent to your email.";
+        await _emailSender.SendEmailAsync(forgotPasswordDto.Email, "Reset Password", message);
+
+        return (true, token);
+    }
+
+    public async Task<(bool, string)> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
+    {
+        var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+        if (user == null)
+            return (false, "Invalid password reset token");
+
+        var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+        if (!result.Succeeded)
+            return (false, result.Errors.FirstOrDefault()?.Description);
+
+        return (true, null);
+    }
+
 }

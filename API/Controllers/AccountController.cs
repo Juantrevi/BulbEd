@@ -29,4 +29,25 @@ public class AccountController : BaseApiController
         return await _accountService.LoginAsync(loginDto);
     }
     
+    [HttpPost("forgotpassword")]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+    {
+        var (success, result) = await _accountService.ForgotPasswordAsync(forgotPasswordDto);
+        if (!success)
+            return BadRequest(result);
+
+        var callbackUrl = Url.Action("ResetPassword", "Account", new { token = result, email = forgotPasswordDto.Email }, Request.Scheme);
+        return Ok(callbackUrl);
+    }
+
+    [HttpPost("resetpassword")]
+    public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+    {
+        var (success, result) = await _accountService.ResetPasswordAsync(resetPasswordDto);
+        if (!success)
+            return BadRequest(result);
+
+        return Ok();
+    }
+    
 }

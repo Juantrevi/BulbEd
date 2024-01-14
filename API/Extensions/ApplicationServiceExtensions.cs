@@ -4,6 +4,7 @@ using BulbEd.Entities;
 using BulbEd.Helpers;
 using BulbEd.Interfaces;
 using BulbEd.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -26,11 +27,6 @@ public static class ApplicationServiceExtensions
             opt.UseMySql(config.GetConnectionString("DefaultConnection"),
                 ServerVersion.AutoDetect(config.GetConnectionString("DefaultConnection")));
         });
-
-        
-
-
-
 
     var mailgunSettings = config.GetSection("Mailgun");
     services
@@ -57,6 +53,9 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IClassScheduleRepository, ClassScheduleRepository>();
         services.AddScoped<IClassScheduleService, ClassScheduleService>();
         services.AddScoped<IEmailSender, EmailSenderService>();
+        services.AddIdentity<AppUser, AppRole>()
+            .AddEntityFrameworkStores<DataContext>()
+            .AddDefaultTokenProviders();
         
 
         return services;
