@@ -40,14 +40,14 @@ public class AccountController : BaseApiController
         return Ok(callbackUrl);
     }
 
-[HttpPost("resetpassword")]
-public async Task<IActionResult> ResetPassword([FromQuery] string token, ResetPasswordDto resetPasswordDto)
-{
-    var (success, result) = await _accountService.ResetPasswordAsync(token, resetPasswordDto);
-    if (!success)
-        return BadRequest(result);
+    [HttpPost("resetpassword")]
+    public async Task<IActionResult> ResetPassword([FromQuery] string token, ResetPasswordDto resetPasswordDto)
+    {
+        var (success, result) = await _accountService.ResetPasswordAsync(token, resetPasswordDto);
+        if (!success)
+            return BadRequest(result);
 
-    return Ok();
-}
+        return Ok();
+    }
     
 }
