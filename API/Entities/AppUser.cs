@@ -43,5 +43,6 @@ public class AppUser : IdentityUser<int>
     public string? InitialPassword { get; set; }
     public bool IsPasswordChangeRequired { get; set; } = true;
     public string? Role { get; set; }
+    public string? ResetToken { get; set; }
 
 }

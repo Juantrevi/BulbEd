@@ -121,6 +121,9 @@ namespace BulbEd.Data.Migrations
                     b.Property<bool?>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Role")
                         .HasColumnType("longtext");
 

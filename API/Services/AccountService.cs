@@ -17,13 +17,15 @@ public class AccountService : IAccountService
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IEmailSender _emailSender;
+    private readonly ILogger<AccountService> _logger;
 
     public AccountService(UserManager<AppUser> userManager, 
         RoleManager<AppRole> roleManager, 
         ITokenService tokenService, 
         IMapper mapper, 
         IUnitOfWork unitOfWork,
-        IEmailSender emailSender)
+        IEmailSender emailSender,
+        ILogger<AccountService> logger)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -31,6 +33,8 @@ public class AccountService : IAccountService
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _emailSender = emailSender;
+        _logger = logger;
+        
     }
 
     public async Task<UserDto> RegisterAsync(RegisterDto registerDto)
@@ -106,26 +110,44 @@ public class AccountService : IAccountService
 
     public async Task<(bool, string)> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
     {
-        var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
-        if (user == null)
-            return (false, "Invalid email address");
+    var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+    if (user == null)
+        return (false, "Invalid email address");
 
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var message = $"Please reset your password by clicking the link we have sent to your email.";
-        await _emailSender.SendEmailAsync(forgotPasswordDto.Email, "Reset Password", message);
+    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+    var encodedToken = System.Web.HttpUtility.UrlEncode(token); // use HttpUtility.UrlEncode to properly encode the token
+    var resetPasswordLink = $"https://localhost:5001/api/resetpassword?token={encodedToken}&email={forgotPasswordDto.Email}";
 
-        return (true, token);
+    var message = $"Please reset your password by clicking the following link: {resetPasswordLink}";
+    await _emailSender.SendEmailAsync(forgotPasswordDto.Email, "Reset Password", message);
+
+    user.ResetToken = token; // store the reset token
+    await _userManager.UpdateAsync(user);
+
+    return (true, "Password reset link sent to email");
     }
 
-    public async Task<(bool, string)> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
+    public async Task<(bool, string)> ResetPasswordAsync(string token, ResetPasswordDto resetPasswordDto)
     {
-        var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+        var decodedToken = System.Web.HttpUtility.UrlDecode(token).Replace(" ", "+"); // replace spaces with + characters
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.ResetToken == decodedToken);
+
+        // Log the provided token and the one stored in the database
+        _logger.LogInformation($"Provided token: {decodedToken}");
+        if (user != null)
+        {
+            _logger.LogInformation($"Stored token: {user.ResetToken}");
+        }
+
         if (user == null)
             return (false, "Invalid password reset token");
 
-        var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+        var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordDto.Password);
         if (!result.Succeeded)
             return (false, result.Errors.FirstOrDefault()?.Description);
+
+        user.ResetToken = null; // clear the reset token after successful password reset
+        await _userManager.UpdateAsync(user);
 
         return (true, null);
     }
