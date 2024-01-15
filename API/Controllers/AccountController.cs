@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BulbEd.Common;
 using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
@@ -37,7 +38,7 @@ public class AccountController : BaseApiController
             return BadRequest(result);
 
         var callbackUrl = Url.Action("ResetPassword", "Account", new { token = result, email = forgotPasswordDto.Email }, Request.Scheme);
-        return Ok(callbackUrl);
+        return Ok(Constants.Messages.PasswordResetLinkSent);
     }
 
     [HttpPost("resetpassword")]
@@ -47,7 +48,7 @@ public class AccountController : BaseApiController
         if (!success)
             return BadRequest(result);
 
-        return Ok();
+        return Ok(Constants.Messages.PasswordResetSuccess);
     }
     
 }

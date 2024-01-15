@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BulbEd.Common;
 using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
@@ -99,6 +100,7 @@ public class AccountService : IAccountService
 
     private UserDto Unauthorized(string invalidUsername)
     {
+        //TODO
         throw new NotImplementedException();
     }
 
@@ -110,21 +112,20 @@ public class AccountService : IAccountService
 
     public async Task<(bool, string)> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
     {
-    var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
-    if (user == null)
-        return (false, "Invalid email address");
+        var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+        if (user == null)
+            return (false, Constants.Messages.InvalidEmail);
 
-    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-    var encodedToken = System.Web.HttpUtility.UrlEncode(token); // use HttpUtility.UrlEncode to properly encode the token
-    var resetPasswordLink = $"https://localhost:5001/api/resetpassword?token={encodedToken}&email={forgotPasswordDto.Email}";
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var encodedToken = System.Web.HttpUtility.UrlEncode(token); // use HttpUtility.UrlEncode to properly encode the token
+        var resetPasswordLink = $"{Constants.Urls.ResetPassword}?token={encodedToken}&email={forgotPasswordDto.Email}";
+        var message = $"{Constants.Messages.PasswordResetLinkMessage + resetPasswordLink}";
+        await _emailSender.SendEmailAsync(forgotPasswordDto.Email, "Reset Password", message);
 
-    var message = $"Please reset your password by clicking the following link: {resetPasswordLink}";
-    await _emailSender.SendEmailAsync(forgotPasswordDto.Email, "Reset Password", message);
+        user.ResetToken = token; // store the reset token
+        await _userManager.UpdateAsync(user);
 
-    user.ResetToken = token; // store the reset token
-    await _userManager.UpdateAsync(user);
-
-    return (true, "Password reset link sent to email");
+        return (true, Constants.Messages.PasswordResetLinkSent);
     }
 
     public async Task<(bool, string)> ResetPasswordAsync(string token, ResetPasswordDto resetPasswordDto)
