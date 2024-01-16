@@ -53,9 +53,9 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IClassScheduleRepository, ClassScheduleRepository>();
         services.AddScoped<IClassScheduleService, ClassScheduleService>();
         services.AddScoped<IEmailSender, EmailSenderService>();
-        services.AddIdentity<AppUser, AppRole>()
-            .AddEntityFrameworkStores<DataContext>()
-            .AddDefaultTokenProviders();
+        //services.AddIdentity<AppUser, AppRole>()
+          //  .AddEntityFrameworkStores<DataContext>()
+            //.AddDefaultTokenProviders();
         
 
         return services;
