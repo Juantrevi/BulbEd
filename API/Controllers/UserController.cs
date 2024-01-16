@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using BulbEd.Common;
 using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
@@ -68,7 +69,7 @@ public class UserController : BaseApiController
         var token = HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1];
         await _tokenBlacklistService.AddToken(token, DateTime.UtcNow.AddHours(1)); // Token will be blacklisted for 1 hour
 
-        return Ok("User logged out successfully");
+        return Ok(Constants.Messages.LogOutSuccess);
     }
     
 

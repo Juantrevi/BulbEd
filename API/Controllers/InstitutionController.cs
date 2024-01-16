@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using BulbEd.Common;
 using BulbEd.DTOs;
 using BulbEd.Interfaces;
 using BulbEd.Services;
@@ -34,20 +35,20 @@ public class InstitutionController : BaseApiController
         return Ok(institution);
     }
     
-[Authorize (Roles = "superadmin")]
-[HttpPost ("createinstitution")]
-public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
-{
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    if (userId == null)
+    [Authorize (Roles = "superadmin")]
+    [HttpPost ("createinstitution")]
+    public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
     {
-        return Unauthorized();
-    }
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
 
-    int id = int.Parse(userId);
-    await _instituteService.CreateInstitute(institutionDto, id);
-    return Ok(new { message = "Institution created" });
-}
+        int id = int.Parse(userId);
+        await _instituteService.CreateInstitute(institutionDto, id);
+        return Ok(new { message = Constants.Messages.InstitutionCreated });
+    }
     
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateInstitution(int id, InstitutionDto institutionDto)
@@ -56,7 +57,7 @@ public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
         if (institution == null) return NotFound();
         _unitOfWork.InstitutionRepository.Update(id, institutionDto);
         if (await _unitOfWork.Complete()) return NoContent();
-        return BadRequest("Problem updating institution");
+        return BadRequest(Constants.Messages.ProblemUpdatingInstitution);
     }
     
     [HttpDelete("{id}")]
@@ -66,7 +67,7 @@ public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
         if (institution == null) return NotFound();
         _unitOfWork.InstitutionRepository.Delete(id);
         if (await _unitOfWork.Complete()) return Ok();
-        return BadRequest("Problem deleting institution");
+        return BadRequest(Constants.Messages.ProblemDeletingInstitution);
     }
     
 }

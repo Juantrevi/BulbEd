@@ -36,8 +36,7 @@ public class AccountController : BaseApiController
         var (success, result) = await _accountService.ForgotPasswordAsync(forgotPasswordDto);
         if (!success)
             return BadRequest(result);
-
-        var callbackUrl = Url.Action("ResetPassword", "Account", new { token = result, email = forgotPasswordDto.Email }, Request.Scheme);
+        
         return Ok(Constants.Messages.PasswordResetLinkSent);
     }
 

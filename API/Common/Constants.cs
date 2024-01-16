@@ -15,6 +15,10 @@ public static class Constants
         public const string PasswordResetLinkSent = "Password reset link sent to email";
         public const string PasswordResetLinkMessage = "Please reset your password by clicking the following link: ";
         public const string PasswordResetSuccess = "Password reset successfully";
+        public const string InstitutionCreated = "Institution created";
+        public const string ProblemUpdatingInstitution = "Problem updating institution";
+        public const string ProblemDeletingInstitution = "Problem deleting institution";
+        public const string LogOutSuccess = "Log out successfully";
     }
 
     // Add more constants as needed
