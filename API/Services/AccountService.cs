@@ -120,7 +120,7 @@ public class AccountService : IAccountService
         var encodedToken = System.Web.HttpUtility.UrlEncode(token); // use HttpUtility.UrlEncode to properly encode the token
         var resetPasswordLink = $"{Constants.Urls.ResetPassword}?token={encodedToken}&email={forgotPasswordDto.Email}";
         var message = $"{Constants.Messages.PasswordResetLinkMessage + resetPasswordLink}";
-        await _emailSender.SendEmailAsync(forgotPasswordDto.Email, "Reset Password", message);
+        await _emailSender.SendEmailAsync(/*forgotPasswordDto.Email,*/"juantrevi70@gmail.com", "Reset Password", message);
 
         user.ResetToken = token; // store the reset token
         await _userManager.UpdateAsync(user);

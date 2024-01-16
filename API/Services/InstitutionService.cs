@@ -16,7 +16,15 @@ public class InstitutionService : IInstituteService
         _mapper = mapper;
     }
 
-public async Task CreateInstitute(InstitutionDto institutionDto, int userId)
+    public async Task<IEnumerable<Institution>> GetInstitutions()
+    {
+        var institutions = await _unitOfWork.InstitutionRepository.GetInstitutions();
+        
+        return institutions;
+        
+    }
+
+    public async Task CreateInstitute(InstitutionDto institutionDto, int userId)
 {
     var institution = _mapper.Map<Institution>(institutionDto);
     await _unitOfWork.InstitutionRepository.Create(institution);

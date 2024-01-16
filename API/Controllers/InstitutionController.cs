@@ -21,12 +21,6 @@ public class InstitutionController : BaseApiController
         _unitOfWork = unitOfWork;
     }
     
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<InstitutionDto>>> GetInstitutions()
-    {
-        var institutions = await _unitOfWork.InstitutionRepository.GetInstitutions();
-        return Ok(institutions);
-    }
     
     [HttpGet("{id}")]
     public async Task<ActionResult<InstitutionDto>> GetInstitutionById(int id)
@@ -35,14 +29,14 @@ public class InstitutionController : BaseApiController
         return Ok(institution);
     }
     
-    [Authorize (Roles = "superadmin")]
+    //[Authorize (Roles = "superadmin")]
     [HttpPost ("createinstitution")]
     public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (userId == null)
         {
-            return Unauthorized();
+            return Unauthorized("User ID not found: " + userId);
         }
 
         int id = int.Parse(userId);

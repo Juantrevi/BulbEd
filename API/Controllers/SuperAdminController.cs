@@ -1,4 +1,5 @@
 ﻿using BulbEd.DTOs;
+using BulbEd.Entities;
 using BulbEd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,20 +10,18 @@ public class SuperAdminController : BaseApiController
 {
     
     private readonly IInstituteService _instituteService;
-    private readonly IUnitOfWork _unitOfWork;
     
-    public SuperAdminController(IInstituteService instituteService, IUnitOfWork unitOfWork)
+    public SuperAdminController(IInstituteService instituteService)
     {
         _instituteService = instituteService;
-        _unitOfWork = unitOfWork;
     }
     
     
-    [Authorize (Roles = "superadmin")]
+    [Authorize (Policy = "RequireSuperAdminRole")]
     [HttpGet ("institutions")]
-    public async Task<ActionResult<IEnumerable<InstitutionDto>>> GetInstitutions()
+    public async Task<ActionResult<IEnumerable<Institution>>> GetInstitutions()
     {
-        var institutions = await _unitOfWork.InstitutionRepository.GetInstitutions();
+        var institutions = await _instituteService.GetInstitutions();
         return Ok(institutions);
     }
     

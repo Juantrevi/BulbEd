@@ -5,6 +5,7 @@ namespace BulbEd.Interfaces;
 
 public interface IInstituteService
 {
+    Task<IEnumerable<Institution>> GetInstitutions();
     Task CreateInstitute(InstitutionDto institutionDto, int userId);
     
     Task DeleteInstitute(int id);
