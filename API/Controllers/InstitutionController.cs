@@ -29,20 +29,7 @@ public class InstitutionController : BaseApiController
         return Ok(institution);
     }
     
-    //[Authorize (Roles = "superadmin")]
-    [HttpPost ("createinstitution")]
-    public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userId == null)
-        {
-            return Unauthorized("User ID not found: " + userId);
-        }
-
-        int id = int.Parse(userId);
-        await _instituteService.CreateInstitute(institutionDto, id);
-        return Ok(new { message = Constants.Messages.InstitutionCreated });
-    }
+    
     
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateInstitution(int id, InstitutionDto institutionDto)

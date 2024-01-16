@@ -1,4 +1,6 @@
-﻿using BulbEd.DTOs;
+﻿using System.Security.Claims;
+using BulbEd.Common;
+using BulbEd.DTOs;
 using BulbEd.Entities;
 using BulbEd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -25,5 +27,20 @@ public class SuperAdminController : BaseApiController
         return Ok(institutions);
     }
     
+    
+    [Authorize (policy: "RequireSuperAdminRole")]
+    [HttpPost ("createinstitution")]
+    public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized("User ID not found: " + userId);
+        }
+
+        int id = int.Parse(userId);
+        await _instituteService.CreateInstitute(institutionDto, id);
+        return Ok(new { message = Constants.Messages.InstitutionCreated });
+    }
     
 }
