@@ -20,35 +20,6 @@ public class InstitutionController : BaseApiController
         _instituteService = instituteService;
         _unitOfWork = unitOfWork;
     }
-    
-    
-    [HttpGet("{id}")]
-    public async Task<ActionResult<InstitutionDto>> GetInstitutionById(int id)
-    {
-        var institution = await _unitOfWork.InstitutionRepository.GetInstitutionById(id);
-        return Ok(institution);
-    }
-    
-    
-    
-    [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateInstitution(int id, InstitutionDto institutionDto)
-    {
-        var institution = await _unitOfWork.InstitutionRepository.GetInstitutionById(id);
-        if (institution == null) return NotFound();
-        _unitOfWork.InstitutionRepository.Update(id, institutionDto);
-        if (await _unitOfWork.Complete()) return NoContent();
-        return BadRequest(Constants.Messages.ProblemUpdatingInstitution);
-    }
-    
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteInstitution(int id)
-    {
-        var institution = await _unitOfWork.InstitutionRepository.GetInstitutionById(id);
-        if (institution == null) return NotFound();
-        _unitOfWork.InstitutionRepository.Delete(id);
-        if (await _unitOfWork.Complete()) return Ok();
-        return BadRequest(Constants.Messages.ProblemDeletingInstitution);
-    }
+
     
 }
