@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BulbEd.Services;
 
+/*
+ * This service handles all the token blacklist related requests
+ */
 public class TokenBlacklistService : ITokenBlacklistService
 {
     private readonly DataContext _context;
@@ -14,6 +17,7 @@ public class TokenBlacklistService : ITokenBlacklistService
         _context = context;
     }
 
+    //Add token to blacklist
     public async Task AddToken(string token, DateTime expirationDate)
     {
         var tokenBlacklist = new TokenBlackList()

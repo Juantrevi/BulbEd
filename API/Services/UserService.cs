@@ -23,7 +23,7 @@ public class UserService : IUserService
 
     }
     
-
+    //TODO: Replace message with custom exception
     public async Task<ContactDetailDto> UpdateContactDetail(ContactDetailDto contactDetailDto, ClaimsPrincipal currentUser)
     {
         var userIdFromToken = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
