@@ -12,6 +12,7 @@ public class EmailSenderService : IEmailSender
         _fluentEmail = fluentEmail;
     }
     
+    //TODO: Add more methods as needed
     public async Task SendEmailAsync(string emailAddress, string subject, string message)
     {
         var email = _fluentEmail

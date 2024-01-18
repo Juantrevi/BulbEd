@@ -1,14 +1,13 @@
-﻿using AutoMapper;
-using BulbEd.Common;
+﻿using BulbEd.Common;
 using BulbEd.DTOs;
-using BulbEd.Entities;
 using BulbEd.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BulbEd.Controllers;
 
+/*
+ * This controller handles all the account related requests
+ */
 public class AccountController : BaseApiController
 {
     private readonly IAccountService _accountService;

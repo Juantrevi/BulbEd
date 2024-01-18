@@ -1,5 +1,7 @@
 ﻿namespace BulbEd.Common;
-
+/*
+ * This class contains all the constants used in the application
+ */
 public static class Constants
 {
     public static class Urls

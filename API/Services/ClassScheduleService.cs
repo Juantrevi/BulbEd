@@ -5,6 +5,10 @@ using BulbEd.Interfaces;
 
 namespace BulbEd.Services;
 
+/*
+ * This service handles all the class schedule related requests
+ */
+//TODO
 public class ClassScheduleService : IClassScheduleService
 {
     private readonly IUnitOfWork _unitOfWork;
