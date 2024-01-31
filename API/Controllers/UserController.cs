@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulbEd.Controllers;
 
+/*
+ * This controller handles all the account related to the user requests
+ */
 public class UserController : BaseApiController
 {
     private readonly IUserService _userService;
@@ -26,7 +29,7 @@ public class UserController : BaseApiController
         _classScheduleService = classScheduleService;
     }
 
-    
+    //Get all users
     [Authorize(Policy = "RequireStudentRole")]
     [HttpGet("users")]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
@@ -35,7 +38,7 @@ public class UserController : BaseApiController
         return Ok(users);
     }
 
-    
+    //Get user by email address
     [HttpGet("user/{emailAddress}")]
     public async Task<ActionResult<MemberDto>> GetUser(string emailAddress)
     {
@@ -43,7 +46,7 @@ public class UserController : BaseApiController
         return Ok(user);
     }
     
-    
+    //Get user by id
     [Authorize(Policy = "RequireStudentRole")]
     //[Authorize(Policy = "RequireAdminRole")]
     [HttpGet("user/{id:int}")]
@@ -53,7 +56,7 @@ public class UserController : BaseApiController
         return Ok(user);
     }
     
-
+    //Update contact details
     [Authorize]
     [HttpPut("contactdetails")]
     public async Task<IActionResult> UpdateContactDetails(ContactDetailDto contactDetailDto)
@@ -62,6 +65,7 @@ public class UserController : BaseApiController
         return Ok(updatedContactDetails);
     }
     
+    //Logout and blacklist token
     [Authorize]
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
