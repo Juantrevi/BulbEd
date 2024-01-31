@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulbEd.Controllers;
 
+/*
+ * This controller handles all the account related requests
+ */
 public class SuperAdminController : BaseApiController
 {
     
@@ -20,7 +23,7 @@ public class SuperAdminController : BaseApiController
         _unitOfWork = unitOfWork;
     }
     
-    
+    //Get all institutions
     [Authorize (Policy = "RequireSuperAdminRole")]
     [HttpGet ("institutions")]
     public async Task<ActionResult<IEnumerable<Institution>>> GetInstitutions()
@@ -29,7 +32,7 @@ public class SuperAdminController : BaseApiController
         return Ok(institutions);
     }
     
-    
+    //Create institution
     [Authorize (policy: "RequireSuperAdminRole")]
     [HttpPost ("createinstitution")]
     public async Task<ActionResult> CreateInstitution(InstitutionDto institutionDto)
@@ -45,7 +48,7 @@ public class SuperAdminController : BaseApiController
         return Ok(new { message = Constants.Messages.InstitutionCreated });
     }
     
-    
+    //Get institution by id
     [HttpGet("{id}")]
     public async Task<ActionResult<InstitutionDto>> GetInstitutionById(int id)
     {
@@ -54,23 +57,24 @@ public class SuperAdminController : BaseApiController
     }
     
     
-    
+    //Update institution
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateInstitution(int id, InstitutionDto institutionDto)
     {
         var institution = await _unitOfWork.InstitutionRepository.GetInstitutionById(id);
         if (institution == null) return NotFound();
-        _unitOfWork.InstitutionRepository.Update(id, institutionDto);
+        await _unitOfWork.InstitutionRepository.Update(id, institutionDto);
         if (await _unitOfWork.Complete()) return NoContent();
         return BadRequest(Constants.Messages.ProblemUpdatingInstitution);
     }
     
+    //Delete institution
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteInstitution(int id)
     {
         var institution = await _unitOfWork.InstitutionRepository.GetInstitutionById(id);
         if (institution == null) return NotFound();
-        _unitOfWork.InstitutionRepository.Delete(id);
+        await _unitOfWork.InstitutionRepository.Delete(id);
         if (await _unitOfWork.Complete()) return Ok();
         return BadRequest(Constants.Messages.ProblemDeletingInstitution);
     }

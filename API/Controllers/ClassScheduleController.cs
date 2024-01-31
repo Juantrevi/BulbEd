@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulbEd.Controllers;
 
+/*
+ * This controller handles all the class schedule related requests
+ */
 public class ClassScheduleController : BaseApiController
 {
     private readonly IClassScheduleService _classScheduleService;
@@ -13,7 +16,9 @@ public class ClassScheduleController : BaseApiController
         _classScheduleService = classScheduleService;
     }
     
+    //TODO: Add more endpoints
         
+    //Get all class schedules
     [HttpGet("class-schedules")]
     public async Task<ActionResult<IEnumerable<ClassScheduleDto>>> GetClassSchedules()
     {

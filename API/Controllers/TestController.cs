@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulbEd.Controllers;
 
+/*
+ * This controller is used for testing purposes NO PRODUCTION CODE SHOULD BE HERE
+ */
 public class TestController : BaseApiController
 {
     

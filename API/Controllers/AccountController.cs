@@ -17,18 +17,21 @@ public class AccountController : BaseApiController
         _accountService = accountService;
     }
 
+    //Register user
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
         return await _accountService.RegisterAsync(registerDto);
     }
 
+    //Login user
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         return await _accountService.LoginAsync(loginDto);
     }
     
+    //Forgot password
     [HttpPost("forgotpassword")]
     public async Task<IActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
     {
@@ -39,6 +42,7 @@ public class AccountController : BaseApiController
         return Ok(Constants.Messages.PasswordResetLinkSent);
     }
 
+    //Reset password
     [HttpPost("resetpassword")]
     public async Task<IActionResult> ResetPassword([FromQuery] string token, ResetPasswordDto resetPasswordDto)
     {
