@@ -1,5 +1,6 @@
 ﻿namespace BulbEd.Entities;
 
+// Represents the photo entity
 public class Photo
 {
     public int Id { get; set; }

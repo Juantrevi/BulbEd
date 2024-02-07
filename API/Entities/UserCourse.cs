@@ -1,5 +1,5 @@
 ﻿namespace BulbEd.Entities;
-
+// Represents the token blacklist entity
 public class UserCourse
 {
     public int UserId { get; set; }
