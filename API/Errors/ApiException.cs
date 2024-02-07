@@ -1,5 +1,6 @@
 ﻿namespace BulbEd.Errors;
 
+// Represents the API exception
 public class ApiException
 {
     public ApiException(int statusCode, string message, string details = null)
